@@ -1,0 +1,9 @@
+@import url('https://fonts.googleapis.com/css2?family=Alfa+Slab+One&display=swap');
+
+.navbar-brand {
+    font-family: "Alfa Slab One", serif;
+    background: linear-gradient(0deg, rgba(34,193,195,1) 0%, rgba(253,187,45,1) 100%);
+    color: white;
+    padding: 2rem;
+    border-radius: 2rem;
+}
