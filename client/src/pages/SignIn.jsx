@@ -7,11 +7,17 @@ import Form from "react-bootstrap/Form";
 import Button from "react-bootstrap/esm/Button";
 import Alert from "react-bootstrap/Alert";
 import Spinner from "react-bootstrap/Spinner";
+import { useDispatch, useSelector } from "react-redux";
+import {
+  signInSuccess,
+  signInStart,
+  signInFailure,
+} from "../redux/user/userSlice";
 
 export default function SignIn() {
   const [formData, setFormData] = useState({});
-  const [errorMessage, setErrorMessage] = useState(null);
-  const [loading, setLoading] = useState(false);
+  const { loading, error: errorMessage } = useSelector((state) => state.user);
+  const dispatch = useDispatch();
   const navigate = useNavigate();
 
   const handleChange = (e) => {
@@ -22,11 +28,10 @@ export default function SignIn() {
   const handleSubmit = async (e) => {
     e.preventDefault();
     if (!formData.email || !formData.password) {
-      return setErrorMessage("Please fill out all fields. ");
+      return dispatch(signInFailure("Please fill out all the fields"));
     }
     try {
-      setLoading(true);
-      setErrorMessage(null);
+      dispatch(signInStart());
       const res = await fetch("/api/auth/signin", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
@@ -34,20 +39,20 @@ export default function SignIn() {
       });
       const data = await res.json();
       if (data.success === false) {
-        return setErrorMessage(data.message);
+        dispatch(signInFailure(data.message));
       }
-      setLoading(false);
-      if(res.ok){
-        navigate('/');
+
+      if (res.ok) {
+        dispatch(signInSuccess(data));
+        navigate("/");
       }
     } catch (error) {
-      setErrorMessage(error.message);
-      setLoading(false);
+      dispatch(signInFailure(error.message));
     }
   };
 
   return (
-    <Container className="mt-20" style={{minHeight: "80vh"}}>
+    <Container className="mt-20" style={{ minHeight: "80vh" }}>
       <Row className="justify-content-md-center">
         <Col xs={12} md={6} lg={4} className="mb-4">
           <Link
@@ -64,8 +69,6 @@ export default function SignIn() {
         </Col>
         <Col xs={12} md={6} lg={4} className="mb-4">
           <Form onSubmit={handleSubmit}>
-            
-
             <Form.Group className="mb-3" controlId="email">
               <Form.Label>Email Address</Form.Label>
               <Form.Control
@@ -96,18 +99,16 @@ export default function SignIn() {
                   "linear-gradient(259deg, rgba(34,76,152,1) 0%, rgba(45,206,253,1) 100%)",
                 border: "none",
                 width: "100%",
-               
               }}
             >
-              {
-                loading ? (
-                  <>
-                  <Spinner animation="grow"/>
+              {loading ? (
+                <>
+                  <Spinner animation="grow" />
                   <span>Loading...</span>
-                  </>
-                  
-                ) : "Sign in"
-              }
+                </>
+              ) : (
+                "Sign in"
+              )}
             </Button>
             <span className="mt-2 m-2">Don't have an account?</span>
             <Link to="/signup">Sign up</Link>
