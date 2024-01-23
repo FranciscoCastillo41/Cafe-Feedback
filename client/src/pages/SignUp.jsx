@@ -47,7 +47,7 @@ export default function SignUp() {
   };
 
   return (
-    <Container className="mt-20">
+    <Container className="mt-20" style={{minHeight: "80vh"}}>
       <Row className="justify-content-md-center">
         <Col xs={12} md={6} lg={4} className="mb-4">
           <Link
