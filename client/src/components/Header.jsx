@@ -16,14 +16,24 @@ export default function Header() {
         <Link to="/" className="navbar-brand text-light">
           Dora's Cafe
         </Link>
+        <Link to="/signup" className="nav-link">
+          <Button
+            className="nav-signup-btn"
+            style={{
+              background: "transparent",
+              borderColor: "#224C98",
+              color: "black",
+              borderWidth: "2px",
+            }}
+          >
+            Sign Up
+          </Button>
+        </Link>
         <Navbar.Toggle aria-controls="basic-navbar-nav" />
         <Navbar.Collapse id="basic-navbar-nav">
           <Nav className="me-auto">
             <Link to="/about" className="nav-link">
               About
-            </Link>
-            <Link to="/signup" className="nav-link">
-              Sign Up
             </Link>
           </Nav>
           <Form inline="true">

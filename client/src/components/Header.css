@@ -2,8 +2,20 @@
 
 .navbar-brand {
     font-family: "Alfa Slab One", serif;
-    background: linear-gradient(0deg, rgba(34,193,195,1) 0%, rgba(253,187,45,1) 100%);
+    /*
+    background: #224C98;
+    */
+    background: linear-gradient(0deg, rgba(34,76,152,1) 0%, rgba(45,206,253,1) 100%);
     color: white;
     padding: 2rem;
     border-radius: 2rem;
+}
+
+.nav-signup-btn {
+    background-color: transparent;
+}
+
+.navbar-style {
+    border-bottom: gray;
+    border-bottom: 1px;
 }
