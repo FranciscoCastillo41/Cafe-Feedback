@@ -15,6 +15,10 @@ const userSchema = new mongoose.Schema ({
         type:String,
         required: true,
     }, 
+    profilePicture: {
+        type: String,
+        default: "https://th.bing.com/th/id/OIP.uKbBm4RXGTb3JAWwkB6QKAHaHa?w=156&h=180&c=7&r=0&o=5&pid=1.7",
+    }
 }, {timestamps:true});
 
 const User = mongoose.model("User", userSchema);

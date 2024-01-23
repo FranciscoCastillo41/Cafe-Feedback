@@ -7,6 +7,7 @@ import Form from "react-bootstrap/Form";
 import Button from "react-bootstrap/esm/Button";
 import Alert from "react-bootstrap/Alert";
 import Spinner from "react-bootstrap/Spinner";
+import OAuth from "../components/OAuth";
 
 export default function SignUp() {
   const [formData, setFormData] = useState({});
@@ -116,6 +117,7 @@ export default function SignUp() {
                 ) : "Sign up"
               }
             </Button>
+            <OAuth />
             <span className="mt-2 m-2">Have an account?</span>
             <Link to="/signin">Sign in</Link>
             {errorMessage && (

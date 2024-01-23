@@ -13,6 +13,7 @@ import {
   signInStart,
   signInFailure,
 } from "../redux/user/userSlice";
+import OAuth from "../components/OAuth";
 
 export default function SignIn() {
   const [formData, setFormData] = useState({});
@@ -110,6 +111,7 @@ export default function SignIn() {
                 "Sign in"
               )}
             </Button>
+            <OAuth />
             <span className="mt-2 m-2">Don't have an account?</span>
             <Link to="/signup">Sign up</Link>
             {errorMessage && (
