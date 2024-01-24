@@ -17,7 +17,7 @@ export default function Header() {
   const { currentUser } = useSelector((state) => state.user);
 
   return (
-    <Navbar expand="lg" className="bg-body-tertiary">
+    <Navbar expand="lg" className="bg-body-tertiary" style={{ borderBottom: "2.5px solid lightgray" }}>
       <Container>
         <Link to="/" className="navbar-brand text-light">
           Dora's Cafe
@@ -29,25 +29,25 @@ export default function Header() {
               className="d-flex align-items-center"
               style={{
                 background: "transparent",
-                border: "none", // Remove border
+                border: "none",
               }}
             >
-              {/* Use the Image component for the profile picture */}
               <Image
-                src={currentUser.profilePicture} // Set the source from user's profilePicture
+                src={currentUser.profilePicture}
                 alt="Profile"
-                roundedCircle // Add roundedCircle for a circular avatar
+                roundedCircle
                 className="mr-2"
-                style={{ width: "30px", height: "30px" }} // Set the width and height as needed
+                style={{ width: "30px", height: "30px" }}
               />
             </Dropdown.Toggle>
             <Dropdown.Menu>
-              <Dropdown.Item className="text-muted">@{currentUser.username}</Dropdown.Item>
+              <Dropdown.Item className="text-muted">
+                @{currentUser.username}
+              </Dropdown.Item>
               <Dropdown.Item>{currentUser.email}</Dropdown.Item>
-              
+
               <Dropdown.Item>
-                
-                Profile
+                <Link to="/dashboard">Profile</Link>
               </Dropdown.Item>
               <Dropdown.Divider />
               <Dropdown.Item>Sign out</Dropdown.Item>

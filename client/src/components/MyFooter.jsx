@@ -4,11 +4,17 @@ import { Link } from "react-router-dom";
 import Row from "react-bootstrap/esm/Row";
 import Col from "react-bootstrap/esm/Col";
 import { BsFacebook, BsInstagram, BsTwitterX } from "react-icons/bs";
+import { CDBModalFooter, CDBBtn, CDBIcon } from 'cdbreact';
+
 
 export default function ComponentFooter() {
   return (
+
+    <>
+    
+    
     <footer
-      className="rounded"
+      
       style={{ borderTopWidth: "4px", borderColor: "#224C98", width: "100%" }}
     >
       <Container className="mt-5">
@@ -60,5 +66,7 @@ export default function ComponentFooter() {
         </div>
       </Container>
     </footer>
+    
+    </>
   );
 }
