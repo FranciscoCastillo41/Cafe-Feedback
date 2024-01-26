@@ -53,36 +53,42 @@ export default function SignIn() {
   };
 
   return (
-    <Container className="mt-20" style={{ minHeight: "80vh" }}>
+    <div style={{ background: "#2c353d" }}>
+    <Container data-bs-theme="dark"
+        bg="dark" style={{ minHeight: "80vh" }}>
       <Row className="justify-content-md-center">
-        <Col xs={12} md={6} lg={4} className="mb-4">
+        <Col xs={12} md={6} lg={4} className="mb-4 mt-20">
           <Link
             to="/"
             className="navbar-brand text-light mb-4"
-            style={{ fontSize: "3rem" }}
+            style={{
+              color: "white",
+              background:
+                "linear-gradient(0deg, rgba(34,76,152,1) 0%, rgba(45,206,253,1) 100%)",
+              padding: "0.6rem",
+              borderRadius: "1rem",
+              fontSize: "3rem",
+            }}
           >
             Dora's Cafe
           </Link>
-          <p className="mt-5">
+          <p className="mt-5 text-light">
             Lorem ipsum dolor sit amet, consectetur adipiscing elit. Quisque nec
             turpis vel libero imperdiet.
           </p>
         </Col>
-        <Col xs={12} md={6} lg={4} className="mb-4">
+        <Col xs={12} md={6} lg={4} className="mb-20 mt-20">
           <Form onSubmit={handleSubmit}>
-            <Form.Group className="mb-3" controlId="email">
+            <Form.Group className="mb-3 text-light" controlId="email">
               <Form.Label>Email Address</Form.Label>
               <Form.Control
                 type="email"
                 placeholder="Email"
                 onChange={handleChange}
               />
-              <Form.Text className="text-muted">
-                We'll never share your email with anyone else.
-              </Form.Text>
             </Form.Group>
 
-            <Form.Group className="mb-3" controlId="password">
+            <Form.Group className="mb-3 text-light" controlId="password">
               <Form.Label>Password</Form.Label>
               <Form.Control
                 type="password"
@@ -112,8 +118,8 @@ export default function SignIn() {
               )}
             </Button>
             <OAuth />
-            <span className="mt-2 m-2">Don't have an account?</span>
-            <Link to="/signup">Sign up</Link>
+            <span className="mt-2 m-2 text-light">Don't have an account?</span>
+            <Link to="/signup" className="text-light">Sign up</Link>
             {errorMessage && (
               <Alert variant="danger" className="mt-2">
                 {errorMessage}
@@ -123,5 +129,6 @@ export default function SignIn() {
         </Col>
       </Row>
     </Container>
+    </div>
   );
 }

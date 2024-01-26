@@ -9,92 +9,115 @@ import Row from "react-bootstrap/Row";
 import { Link } from "react-router-dom";
 import { useSelector } from "react-redux";
 import Dropdown from "react-bootstrap/Dropdown";
+import NavDropdown from "react-bootstrap/NavDropdown";
 import Image from "react-bootstrap/Image";
-
 import "./Header.css";
 
 export default function Header() {
   const { currentUser } = useSelector((state) => state.user);
 
   return (
-    <Navbar expand="lg" className="bg-body-tertiary" style={{ borderBottom: "2.5px solid lightgray" }}>
+    <Navbar
+      collapseOnSelect
+      expand="lg"
+      data-bs-theme="dark"
+      bg="dark"
+      style={{
+        padding: "0.8rem",
+        borderBottom: "0.2rem solid #224C98",
+      }}
+    >
       <Container>
-        <Link to="/" className="navbar-brand text-light">
-          Dora's Cafe
-        </Link>
-        {currentUser ? (
-          <Dropdown>
-            <Dropdown.Toggle
-              id="dropdown"
-              className="d-flex align-items-center"
-              style={{
-                background: "transparent",
-                border: "none",
-              }}
-            >
-              <Image
-                src={currentUser.profilePicture}
-                alt="Profile"
-                roundedCircle
-                className="mr-2"
-                style={{ width: "30px", height: "30px" }}
-              />
-            </Dropdown.Toggle>
-            <Dropdown.Menu>
-              <Dropdown.Item className="text-muted">
-                @{currentUser.username}
-              </Dropdown.Item>
-              <Dropdown.Item>{currentUser.email}</Dropdown.Item>
+        <Navbar.Brand
+          style={{
+            color: "white",
+            background:
+              "linear-gradient(0deg, rgba(34,76,152,1) 0%, rgba(45,206,253,1) 100%)",
+            padding: "0.6rem",
+            borderRadius: "1rem",
+          }}
+        >
+          <Link to="/">Dora's Cafe</Link>
+        </Navbar.Brand>
+        <Navbar.Toggle aria-controls="responsive-navbar-nav" />
+        <Navbar.Collapse id="responsive-navbar-nav">
+          <Nav className="me-auto">
+            <Nav.Item className="nav-link text-light">
+              <Link to="/about">About</Link>
+            </Nav.Item>
+            <Nav.Item className="nav-link text-light">
+              <Link to="/signup">Specials</Link>
+            </Nav.Item>
+            <Nav.Item className="nav-link text-light">
+              <Link to="/">Link</Link>
+            </Nav.Item>
+            <Nav.Item className="nav-link text-light">
+              <Link to="/">Link</Link>
+            </Nav.Item>
 
-              <Dropdown.Item>
-                <Link to="/dashboard">Profile</Link>
-              </Dropdown.Item>
-              <Dropdown.Divider />
-              <Dropdown.Item>Sign out</Dropdown.Item>
-            </Dropdown.Menu>
-          </Dropdown>
-        ) : (
-          <>
-            <Link to="/signup" className="nav-link">
+            {currentUser ? (
+              <NavDropdown
+                title={
+                  <Image
+                    src={currentUser.profilePicture}
+                    alt="Profile"
+                    roundedCircle
+                    className="mr-2"
+                    style={{ width: "30px", height: "30px" }}
+                  />
+                }
+                id="collapsible-nav-dropdown"
+                className="no-arrow-dropdown"
+              >
+                <NavDropdown.Item>
+                  <Link to="/dashboard">Profile</Link>
+                </NavDropdown.Item>
+                <NavDropdown.Item href="#action/3.2">
+                  Another action
+                </NavDropdown.Item>
+                <NavDropdown.Item href="#action/3.3">
+                  Something
+                </NavDropdown.Item>
+                <NavDropdown.Divider />
+                <NavDropdown.Item href="#action/3.4">Sign out</NavDropdown.Item>
+              </NavDropdown>
+            ) : (
+              <>
+                <Link to="/signup" className="nav-link">
+                  <Button
+                    className="nav-signup-btn"
+                    style={{
+                      background: "transparent",
+                      borderColor: "#224C98",
+                      color: "black",
+                      borderWidth: "2px",
+                    }}
+                  >
+                    Sign in
+                  </Button>
+                </Link>
+              </>
+            )}
+          </Nav>
+          <Nav>
+            <Form className="d-flex">
+              <Form.Control
+                type="search"
+                placeholder="Search"
+                className="me-2 bg-dark text-light"
+                aria-label="Search"
+              />
               <Button
-                className="nav-signup-btn"
                 style={{
-                  background: "transparent",
-                  borderColor: "#224C98",
-                  color: "black",
-                  borderWidth: "2px",
+                  background:
+                    "linear-gradient(259deg, rgba(34,76,152,1) 0%, rgba(45,206,253,1) 100%)",
+                  border: "none",
                 }}
               >
-                Sign in
+                Search
               </Button>
-            </Link>
-          </>
-        )}
-
-        <Navbar.Toggle aria-controls="basic-navbar-nav" />
-        <Navbar.Collapse id="basic-navbar-nav">
-          <Nav className="me-auto">
-            <Link to="/about" className="nav-link">
-              About
-            </Link>
-            <Link to="/signup" className="nav-link">
-              Sign up
-            </Link>
+            </Form>
           </Nav>
-          <Form inline="true">
-            <Row>
-              <Col xs="auto">
-                <Form.Control
-                  type="text"
-                  placeholder="Search"
-                  className=" mr-sm-2"
-                />
-              </Col>
-              <Col xs="auto">
-                <Button type="submit">Submit</Button>
-              </Col>
-            </Row>
-          </Form>
         </Navbar.Collapse>
       </Container>
     </Navbar>

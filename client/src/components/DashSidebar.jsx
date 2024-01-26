@@ -18,18 +18,30 @@ export default function DashSidebar() {
   }, [location.search]);
 
   return (
-    <Nav className="flex-column w-full md:w-56 bg-light text-dark">
+    <Nav className="flex-column w-full md:w-56 bg-dark text-light">
       <Link
         to="/dashboard?tab=profile"
-        className="nav-link d-flex align-items-center text-dark"
+        className="nav-link d-flex align-items-center text-light"
       >
         <AiOutlineUser />
         <Nav.Item className="ml-2">Profile</Nav.Item>
       </Link>
 
-      <Nav.Item className="nav-link cursor-pointer d-flex align-items-center text-dark">
+      <Nav.Item className="nav-link cursor-pointer d-flex align-items-center text-light">
         <IoIosArrowForward />
         <span className="ml-2">Sign Out</span>
+      </Nav.Item>
+      <Nav.Item className="nav-link cursor-pointer d-flex align-items-center text-light">
+        <IoIosArrowForward />
+        <span className="ml-2">Link</span>
+      </Nav.Item>
+      <Nav.Item className="nav-link cursor-pointer d-flex align-items-center text-light">
+        <IoIosArrowForward />
+        <span className="ml-2">Link</span>
+      </Nav.Item>
+      <Nav.Item className="nav-link cursor-pointer d-flex align-items-center text-light">
+        <IoIosArrowForward />
+        <span className="ml-2">Link</span>
       </Nav.Item>
       
     </Nav>

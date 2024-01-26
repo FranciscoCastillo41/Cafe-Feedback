@@ -38,8 +38,8 @@ export default function SignUp() {
         return setErrorMessage(data.message);
       }
       setLoading(false);
-      if(res.ok){
-        navigate('/signin')
+      if (res.ok) {
+        navigate("/signin");
       }
     } catch (error) {
       setErrorMessage(error.message);
@@ -48,86 +48,98 @@ export default function SignUp() {
   };
 
   return (
-    <Container className="mt-20" style={{minHeight: "80vh"}}>
-      <Row className="justify-content-md-center">
-        <Col xs={12} md={6} lg={4} className="mb-4">
-          <Link
-            to="/"
-            className="navbar-brand text-light mb-4"
-            style={{ fontSize: "3rem" }}
-          >
-            Dora's Cafe
-          </Link>
-          <p className="mt-5">
-            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Quisque nec
-            turpis vel libero imperdiet.
-          </p>
-        </Col>
-        <Col xs={12} md={6} lg={4} className="mb-4">
-          <Form onSubmit={handleSubmit}>
-            <Form.Group className="mb-3" controlId="username">
-              <Form.Label>Your username</Form.Label>
-              <Form.Control
-                type="text"
-                placeholder="Username"
-                onChange={handleChange}
-              />
-            </Form.Group>
-
-            <Form.Group className="mb-3" controlId="email">
-              <Form.Label>Email Address</Form.Label>
-              <Form.Control
-                type="email"
-                placeholder="Email"
-                onChange={handleChange}
-              />
-              <Form.Text className="text-muted">
-                We'll never share your email with anyone else.
-              </Form.Text>
-            </Form.Group>
-
-            <Form.Group className="mb-3" controlId="password">
-              <Form.Label>Password</Form.Label>
-              <Form.Control
-                type="password"
-                placeholder="Password"
-                onChange={handleChange}
-              />
-            </Form.Group>
-
-            <Button
-              type="submit"
-              className="mt-2 mb-2"
-              disabled={loading}
+    <div style={{ background: "#2c353d" }}>
+      <Container
+        className="text-light"
+        style={{ minHeight: "80vh" }}
+        data-bs-theme="dark"
+        bg="dark"
+      >
+        <Row className="justify-content-md-center">
+          <Col xs={12} md={6} lg={4} className="mb-4 mt-20">
+            <Link
+              to="/"
+              className="navbar-brand text-light mb-4"
               style={{
+                color: "white",
                 background:
-                  "linear-gradient(259deg, rgba(34,76,152,1) 0%, rgba(45,206,253,1) 100%)",
-                border: "none",
-                width: "100%",
-               
+                  "linear-gradient(0deg, rgba(34,76,152,1) 0%, rgba(45,206,253,1) 100%)",
+                padding: "0.6rem",
+                borderRadius: "1rem",
+                fontSize: "3rem",
               }}
             >
-              {
-                loading ? (
+              Dora's Cafe
+            </Link>
+            <p className="mt-5">
+              Lorem ipsum dolor sit amet, consectetur adipiscing elit. Quisque
+              nec turpis vel libero imperdiet.
+            </p>
+          </Col>
+          <Col xs={12} md={6} lg={4} className="mb-10 mt-20">
+            <Form onSubmit={handleSubmit}>
+              <Form.Group className="mb-3" controlId="username">
+                <Form.Label>Your username</Form.Label>
+                <Form.Control
+                  type="text"
+                  placeholder="Username"
+                  onChange={handleChange}
+                />
+              </Form.Group>
+
+              <Form.Group className="mb-3" controlId="email">
+                <Form.Label>Email Address</Form.Label>
+                <Form.Control
+                  type="email"
+                  placeholder="Email"
+                  onChange={handleChange}
+                />
+                <Form.Text className="text-light">
+                  We'll never share your email with anyone else.
+                </Form.Text>
+              </Form.Group>
+
+              <Form.Group className="mb-3" controlId="password">
+                <Form.Label>Password</Form.Label>
+                <Form.Control
+                  type="password"
+                  placeholder="Password"
+                  onChange={handleChange}
+                />
+              </Form.Group>
+
+              <Button
+                type="submit"
+                className="mt-2 mb-2"
+                disabled={loading}
+                style={{
+                  background:
+                    "linear-gradient(259deg, rgba(34,76,152,1) 0%, rgba(45,206,253,1) 100%)",
+                  border: "none",
+                  width: "100%",
+                }}
+              >
+                {loading ? (
                   <>
-                  <Spinner animation="grow"/>
-                  <span>Loading...</span>
+                    <Spinner animation="grow" />
+                    <span>Loading...</span>
                   </>
-                  
-                ) : "Sign up"
-              }
-            </Button>
-            <OAuth />
-            <span className="mt-2 m-2">Have an account?</span>
-            <Link to="/signin">Sign in</Link>
-            {errorMessage && (
-              <Alert variant="danger" className="mt-2">
-                {errorMessage}
-              </Alert>
-            )}
-          </Form>
-        </Col>
-      </Row>
-    </Container>
+                ) : (
+                  "Sign up"
+                )}
+              </Button>
+              <OAuth />
+              <span className="mt-2 m-2">Have an account?</span>
+              <Link to="/signin">Sign in</Link>
+              {errorMessage && (
+                <Alert variant="danger" className="mt-2">
+                  {errorMessage}
+                </Alert>
+              )}
+            </Form>
+          </Col>
+        </Row>
+      </Container>
+    </div>
   );
 }

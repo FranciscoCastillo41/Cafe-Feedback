@@ -52,8 +52,8 @@ export default function OAuth() {
         borderRadius: "10px !important",
       }}
     >
-      <AiFillGoogleCircle size={24} className="mr-2" />
-      <span style={{ fontSize: "1rem" }}>Continue with Google</span>
+      <AiFillGoogleCircle size={24} className="mr-2 text-light" />
+      <span style={{ fontSize: "1rem" }} className="text-light">Continue with Google</span>
     </Button>
   );
 }

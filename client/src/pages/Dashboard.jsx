@@ -21,16 +21,15 @@ export default function Dashboard() {
   const isMobile = window.innerWidth < 768;
 
   return (
-    <div className="min-vh-100 d-flex flex-column flex-md-row">
+    <div
+      className="min-vh-100 d-flex flex-column flex-md-row"
+      style={{ background: "#2c353d" }}
+    >
       <Col md={3}>
-        {/* Sidebar */}
         <DashSidebar />
       </Col>
 
-      <Col md={9}>
-        {/* profile... */}
-        {tab === "profile" && <DashProfile />}
-      </Col>
+      <Col md={9}>{tab === "profile" && <DashProfile />}</Col>
     </div>
   );
 }

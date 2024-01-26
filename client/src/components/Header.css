@@ -4,9 +4,9 @@
     font-family: "Alfa Slab One", serif;
     /*
     background: #224C98;
-    */
+    
     background: linear-gradient(0deg, rgba(34,76,152,1) 0%, rgba(45,206,253,1) 100%);
-    color: white;
+    */
     padding: 2rem;
     border-radius: 2rem;
 }
@@ -19,3 +19,7 @@
     border-bottom: gray;
     border-bottom: 1px;
 }
+
+.no-arrow-dropdown .dropdown-toggle::after {
+    display: none !important;
+  }
