@@ -31,18 +31,7 @@ export default function DashSidebar() {
         <IoIosArrowForward />
         <span className="ml-2">Sign Out</span>
       </Nav.Item>
-      <Nav.Item className="nav-link cursor-pointer d-flex align-items-center text-light">
-        <IoIosArrowForward />
-        <span className="ml-2">Link</span>
-      </Nav.Item>
-      <Nav.Item className="nav-link cursor-pointer d-flex align-items-center text-light">
-        <IoIosArrowForward />
-        <span className="ml-2">Link</span>
-      </Nav.Item>
-      <Nav.Item className="nav-link cursor-pointer d-flex align-items-center text-light">
-        <IoIosArrowForward />
-        <span className="ml-2">Link</span>
-      </Nav.Item>
+      
       
     </Nav>
   );

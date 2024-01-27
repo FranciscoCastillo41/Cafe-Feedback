@@ -8,21 +8,26 @@ import {
 } from "firebase/storage";
 import { app } from "../firebase";
 
+import { HiOutlineExclamationCircle } from "react-icons/hi";
 import Container from "react-bootstrap/Container";
 import Image from "react-bootstrap/Image";
 import Card from "react-bootstrap/Card";
 import Form from "react-bootstrap/Form";
 import Button from "react-bootstrap/Button";
 import Alert from "react-bootstrap/Alert";
+import Modal from "react-bootstrap/Modal";
 import {
   updateStart,
   updateFailure,
   updateSuccess,
+  deleteUserFailure,
+  deleteUserStart,
+  deleteUserSuccess,
 } from "../redux/user/userSlice";
 import { useDispatch } from "react-redux";
 
 export default function DashProfile() {
-  const { currentUser } = useSelector((state) => state.user);
+  const { currentUser, error } = useSelector((state) => state.user);
   const [imageFile, setImageFile] = useState(null);
   const [imageFileUrl, setImageFileUrl] = useState(null);
   const [imageFileUploadProgress, setImageFileUploadProgress] = useState(null);
@@ -30,6 +35,7 @@ export default function DashProfile() {
   const [imageFileUploading, setImageFileUploading] = useState(false);
   const [updateUserSuccess, setUpdateUserSuccess] = useState(null);
   const [updateUserError, setUpdateUserError] = useState(null);
+  const [showModal, setShowModal] = useState(false);
   const [formData, setFormData] = useState({});
   const dispatch = useDispatch();
 
@@ -90,12 +96,11 @@ export default function DashProfile() {
   const handleSubmit = async (e) => {
     e.preventDefault();
     if (Object.keys(formData).length === 0) {
-      setUpdateUserError('No changes made');
+      setUpdateUserError("No changes made");
       return;
-
     }
-    if(imageFileUploading) {
-      setUpdateUserError('Please wait for image to upload');
+    if (imageFileUploading) {
+      setUpdateUserError("Please wait for image to upload");
       return;
     }
     try {
@@ -119,6 +124,25 @@ export default function DashProfile() {
       dispatch(updateFailure(error.message));
     }
   };
+  const handleDeleteUser = async () => {
+    setShowModal(false);
+    try{
+      dispatch(deleteUserStart());
+      const res = await fetch(`/api/user/delete/${currentUser._id}`,
+      {
+        method: 'DELETE',
+      });
+      const data = await res.json();
+      if(!res.ok) {
+        dispatch(deleteUserFailure(error.message));
+      } else {
+        dispatch(deleteUserSuccess(data));
+      }
+
+    } catch(error){
+      dispatch(deleteUserFailure(error.message));
+    }
+  }
 
   return (
     <Container className="mx-auto mb-5 mt-5">
@@ -135,9 +159,8 @@ export default function DashProfile() {
       <Card
         className="mx-auto "
         data-bs-theme="dark"
-        
         //bg="dark"
-        style={{ maxWidth: "500px", border: "none",background: "#2c353d" }}
+        style={{ maxWidth: "500px", border: "none", background: "#2c353d" }}
       >
         <Image
           src={imageFileUrl || currentUser.profilePicture}
@@ -198,7 +221,7 @@ export default function DashProfile() {
             </Button>
           </Form>
           <div className="flex justify-between mt-2">
-            <span>Delete</span>
+            <span onClick={() => setShowModal(true)}>Delete</span>
             <span>Sign out</span>
           </div>
           {updateUserSuccess && (
@@ -211,7 +234,30 @@ export default function DashProfile() {
               {updateUserError}
             </Alert>
           )}
-          
+           {error && (
+            <Alert variant="warning" className="mt-3">
+              {error}
+            </Alert>
+          )}
+          <Modal bg='dark' show={showModal} onClose={() => setShowModal(false)} centered>
+            <Modal.Header closeButton></Modal.Header>
+            <Modal.Body>
+              <div className="text-center">
+                <HiOutlineExclamationCircle
+                  className="text-secondary mx-auto"
+                  style={{ fontSize: "4rem" }}
+                />
+              </div>
+              <h3 className="mb-5 text-center mt-3">
+                Are you sure you want to delete your account?
+              </h3>
+              <div className="flex justify-center gap-4">
+              <Button variant="danger" onClick={handleDeleteUser}>Yes I'm sure</Button>
+              <Button onClick={() => setShowModal(false)}>No, cancel</Button>
+              </div>
+              
+            </Modal.Body>
+          </Modal>
         </Card.Body>
       </Card>
     </Container>
