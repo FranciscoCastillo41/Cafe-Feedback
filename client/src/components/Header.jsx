@@ -9,12 +9,31 @@ import Row from "react-bootstrap/Row";
 import { Link } from "react-router-dom";
 import { useSelector } from "react-redux";
 import Dropdown from "react-bootstrap/Dropdown";
+import { useDispatch } from "react-redux";
+import { signoutSuccess } from "../redux/user/userSlice";
 import NavDropdown from "react-bootstrap/NavDropdown";
 import Image from "react-bootstrap/Image";
 import "./Header.css";
 
 export default function Header() {
   const { currentUser } = useSelector((state) => state.user);
+  const dispatch = useDispatch();
+
+  const handleSignout = async () => {
+    try {
+      const res = await fetch('/api/user/signout', {
+        method: 'POST',
+      });
+      const data = await res.json();
+      if (!res.ok) {
+        console.log(data.message);
+      } else {
+        dispatch(signoutSuccess());
+      }
+    } catch (error) {
+      console.log(error.message);
+    }
+  };
 
   return (
     <Navbar
@@ -48,12 +67,7 @@ export default function Header() {
             <Nav.Item className="nav-link text-light">
               <Link to="/signup">Specials</Link>
             </Nav.Item>
-            <Nav.Item className="nav-link text-light">
-              <Link to="/">Link</Link>
-            </Nav.Item>
-            <Nav.Item className="nav-link text-light">
-              <Link to="/">Link</Link>
-            </Nav.Item>
+            
 
             {currentUser ? (
               <NavDropdown
@@ -79,22 +93,21 @@ export default function Header() {
                   Something
                 </NavDropdown.Item>
                 <NavDropdown.Divider />
-                <NavDropdown.Item href="#action/3.4">Sign out</NavDropdown.Item>
+                <NavDropdown.Item onClick={handleSignout}>Sign out</NavDropdown.Item>
               </NavDropdown>
             ) : (
               <>
-                <Link to="/signup" className="nav-link">
-                  <Button
-                    className="nav-signup-btn"
-                    style={{
-                      background: "transparent",
-                      borderColor: "#224C98",
-                      color: "black",
-                      borderWidth: "2px",
-                    }}
-                  >
+                <Link to="/signin" className="nav-link" style={{
+                      background:
+                      "linear-gradient(259deg, rgba(34,76,152,1) 0%, rgba(45,206,253,1) 100%)",
+                    border: "none",
+                    color: "white",
+                    borderRadius: "5px",
+                    }}>
+                  
+                  
                     Sign in
-                  </Button>
+                  
                 </Link>
               </>
             )}

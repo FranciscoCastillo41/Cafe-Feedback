@@ -23,8 +23,10 @@ import {
   deleteUserFailure,
   deleteUserStart,
   deleteUserSuccess,
+  signoutSuccess,
 } from "../redux/user/userSlice";
 import { useDispatch } from "react-redux";
+import { signout } from "../../../api/controllers/user.controller";
 
 export default function DashProfile() {
   const { currentUser, error } = useSelector((state) => state.user);
@@ -142,7 +144,23 @@ export default function DashProfile() {
     } catch(error){
       dispatch(deleteUserFailure(error.message));
     }
-  }
+  };
+
+  const handleSignout = async () => {
+    try {
+      const res = await fetch('/api/user/signout', {
+        method: 'POST',
+      });
+      const data = await res.json();
+      if (!res.ok) {
+        console.log(data.message);
+      } else {
+        dispatch(signoutSuccess());
+      }
+    } catch (error) {
+      console.log(error.message);
+    }
+  };
 
   return (
     <Container className="mx-auto mb-5 mt-5">
@@ -222,7 +240,7 @@ export default function DashProfile() {
           </Form>
           <div className="flex justify-between mt-2">
             <span onClick={() => setShowModal(true)}>Delete</span>
-            <span>Sign out</span>
+            <span onClick={handleSignout}>Sign out</span>
           </div>
           {updateUserSuccess && (
             <Alert variant="success" className="mt-3">
