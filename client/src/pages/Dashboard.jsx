@@ -3,6 +3,7 @@ import { useLocation } from "react-router-dom";
 import DashSidebar from "../components/DashSidebar";
 import DashProfile from "../components/DashProfile";
 import DashPosts from "../components/DashPosts";
+import DashUsers from "../components/DashUsers";
 import Container from "react-bootstrap/esm/Container";
 import "./Dashboard.css";
 import Col from "react-bootstrap/esm/Col";
@@ -21,16 +22,16 @@ export default function Dashboard() {
   }, [location.search]);
 
   return (
-    
-      <div className="min-vh-100 d-flex flex-column flex-md-row">
-        <Col md={3}>
-          <DashSidebar />
-        </Col>
+    <div className="min-vh-100 d-flex flex-column flex-md-row">
+      <Col md={3}>
+        <DashSidebar />
+      </Col>
 
-        <Col md={8}>{tab === "profile" && <DashProfile />}
+      <Col md={8}>
+        {tab === "profile" && <DashProfile />}
         {tab === "posts" && <DashPosts />}
-        </Col>
-      </div>
-    
+        {tab === "users" && <DashUsers />}
+      </Col>
+    </div>
   );
 }

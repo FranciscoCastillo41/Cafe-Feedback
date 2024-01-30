@@ -3,7 +3,7 @@ import { useDispatch } from "react-redux";
 import { signoutSuccess } from "../redux/user/userSlice";
 import { AiOutlineUser } from "react-icons/ai";
 import { IoIosArrowForward } from "react-icons/io";
-import { HiDocumentText } from "react-icons/hi";
+import { HiDocumentText, HiOutlineUserGroup } from "react-icons/hi";
 import { useLocation } from "react-router-dom";
 import { Link } from "react-router-dom";
 import { useSelector } from "react-redux";
@@ -60,6 +60,15 @@ export default function DashSidebar() {
         >
           <HiDocumentText />
           <Nav.Item className="ml-2">Posts</Nav.Item>
+        </Link>
+      )}
+      {currentUser.isAdmin && (
+        <Link
+          to="/dashboard?tab=users"
+          className="nav-link d-flex align-items-center text-light"
+        >
+          <HiOutlineUserGroup />
+          <Nav.Item className="ml-2">Users</Nav.Item>
         </Link>
       )}
 
