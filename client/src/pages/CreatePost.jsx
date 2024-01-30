@@ -5,9 +5,62 @@ import Form from "react-bootstrap/Form";
 import Row from "react-bootstrap/Row";
 import Button from "react-bootstrap/Button";
 import ReactQuill from "react-quill";
+import Alert from "react-bootstrap/Alert";
+import Image from "react-bootstrap/Image";
+import {
+  getDownloadURL,
+  getStorage,
+  ref,
+  uploadBytesResumable,
+} from "firebase/storage";
+import { app } from "../firebase";
+
 import "react-quill/dist/quill.snow.css";
 
 export default function CreatePost() {
+  const [file, setFile] = useState(null);
+  const [imageUploadProgress, setImageUploadProgress] = useState(null);
+  const [imageUploadError, setImageUploadError] = useState(null);
+  const [formData, setFormData] = useState({});
+
+  const handleUploadImage = async () => {
+    try {
+      if (!file) {
+        setImageUploadError("Please select an image");
+        return;
+      }
+      setImageUploadError(null);
+      const storage = getStorage(app);
+      const fileName = new Date().getTime() + "-" + file.name;
+      const storageRef = ref(storage, fileName);
+      const uploadTask = uploadBytesResumable(storageRef, file);
+      uploadTask.on(
+        "state_changed",
+        (snapshot) => {
+          const progress =
+            (snapshot.bytesTransferred.bytesTransferred / snapshot.totalBytes) *
+            100;
+          setImageUploadProgress(progress.toFixed(0));
+        },
+        (error) => {
+          setImageUploadError("Image upload failed");
+          setImageUploadProgress(null);
+        },
+        () => {
+          getDownloadURL(uploadTask.snapshot.ref).then((downloadURL) => {
+            setImageUploadProgress(null);
+            setImageUploadError(null);
+            setFormData({ ...formData, image: downloadURL });
+          });
+        }
+      );
+    } catch (error) {
+      setImageUploadError("Image upload failed");
+      setImageUploadProgress(null);
+      console.log(error);
+    }
+  };
+
   return (
     <section
       style={{ background: "#2c353d" }}
@@ -35,10 +88,22 @@ export default function CreatePost() {
           <div className="border border-info p-3">
             <Form.Group controlId="formFile" className="mb-3">
               <Form.Label>File upload</Form.Label>
-              <Form.Control type="file" accept="image/*" />
-              <Button>Upload Image</Button>
+              <Form.Control
+                type="file"
+                accept="image/*"
+                onChange={(e) => setFile(e.target.files[0])}
+              />
+              <Button onClick={handleUploadImage}>Upload Image</Button>
             </Form.Group>
           </div>
+          {imageUploadError && (
+            <Alert>
+              {imageUploadError}
+            </Alert>
+          )}
+          {formData.image && (
+            <Image src={formData.image} className="w-full h-72 object-cover"/>
+          )}
           <ReactQuill
             theme="snow"
             placeholder="Write something..."
