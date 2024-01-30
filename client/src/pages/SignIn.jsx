@@ -53,34 +53,25 @@ export default function SignIn() {
   };
 
   return (
-    <div style={{ background: "#2c353d" }}>
-    <Container data-bs-theme="dark"
-        bg="dark" style={{ minHeight: "80vh" }}>
-      <Row className="justify-content-md-center">
-        <Col xs={12} md={6} lg={4} className="mb-4 mt-20">
-          <Link
-            to="/"
-            className="navbar-brand text-light mb-4"
-            style={{
-              color: "white",
-              background:
-                "linear-gradient(0deg, rgba(34,76,152,1) 0%, rgba(45,206,253,1) 100%)",
-              padding: "0.6rem",
-              borderRadius: "1rem",
-              fontSize: "3rem",
-              textDecoration:"none",
-            }}
+    <Container className="min-vh-100">
+      <Row className="mt-5">
+        <Col xs={12} md={6} lg={6} className="mt-5">
+          <h1
+            className="display-1 nav-font"
+            style={{ color: "#002460", fontWeight: "bolder" }}
           >
             Dora's Cafe
-          </Link>
-          <p className="mt-5 text-light">
-            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Quisque nec
-            turpis vel libero imperdiet.
+          </h1>
+          <p className="lead">
+            Sign in to Dora's Cafe to share your feedback on our delicious food
+            and explore exclusive specials! Your opinion matters, and we can't
+            wait to hear from you. Join us in enhancing your dining experience
+            at Dora's Cafe.
           </p>
         </Col>
-        <Col xs={12} md={6} lg={4} className="mb-20 mt-20">
+        <Col xs={12} md={6} lg={6}>
           <Form onSubmit={handleSubmit}>
-            <Form.Group className="mb-3 text-light" controlId="email">
+            <Form.Group className="mb-3" controlId="email">
               <Form.Label>Email Address</Form.Label>
               <Form.Control
                 type="email"
@@ -89,7 +80,7 @@ export default function SignIn() {
               />
             </Form.Group>
 
-            <Form.Group className="mb-3 text-light" controlId="password">
+            <Form.Group className="mb-3" controlId="password">
               <Form.Label>Password</Form.Label>
               <Form.Control
                 type="password"
@@ -103,8 +94,7 @@ export default function SignIn() {
               className="mt-2 mb-2"
               disabled={loading}
               style={{
-                background:
-                  "linear-gradient(259deg, rgba(34,76,152,1) 0%, rgba(45,206,253,1) 100%)",
+                background: "#0072bc",
                 border: "none",
                 width: "100%",
               }}
@@ -119,8 +109,8 @@ export default function SignIn() {
               )}
             </Button>
             <OAuth />
-            <span className="mt-2 m-2 text-light">Don't have an account?</span>
-            <Link to="/signup" className="text-light">Sign up</Link>
+            <span className="mt-2 m-2">Don't have an account?</span>
+            <Link to="/signup">Sign up</Link>
             {errorMessage && (
               <Alert variant="danger" className="mt-2">
                 {errorMessage}
@@ -130,6 +120,5 @@ export default function SignIn() {
         </Col>
       </Row>
     </Container>
-    </div>
   );
 }

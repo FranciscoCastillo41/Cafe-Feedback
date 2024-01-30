@@ -48,7 +48,89 @@ export default function SignUp() {
   };
 
   return (
-    <div style={{ background: "#2c353d" }}>
+    <>
+      <Container className="min-vh-100">
+        <Row className="mt-5">
+          <Col xs={12} md={6} lg={6} className="mt-5">
+            <h1
+              className="display-1 nav-font"
+              style={{ color: "#002460", fontWeight: "bolder" }}
+            >
+              Dora's Cafe
+            </h1>
+            <p className="lead">
+              Sign up for Dora's Cafe to create an account and start sharing
+              your feedback on our delightful food. Explore exclusive specials
+              tailored just for you! Your opinion matters, and we're excited to
+              welcome you. Join us in enhancing your dining experience at Dora's
+              Cafe.
+            </p>
+          </Col>
+          <Col xs={12} md={6} lg={6}>
+            <Form onSubmit={handleSubmit}>
+              <Form.Group className="mb-3" controlId="username">
+                <Form.Label>Your username</Form.Label>
+                <Form.Control
+                  type="text"
+                  placeholder="Username"
+                  onChange={handleChange}
+                />
+              </Form.Group>
+
+              <Form.Group className="mb-3" controlId="email">
+                <Form.Label>Email Address</Form.Label>
+                <Form.Control
+                  type="email"
+                  placeholder="Email"
+                  onChange={handleChange}
+                />
+                <Form.Text className="text-muted">
+                  We'll never share your email with anyone else.
+                </Form.Text>
+              </Form.Group>
+
+              <Form.Group className="mb-3" controlId="password">
+                <Form.Label>Password</Form.Label>
+                <Form.Control
+                  type="password"
+                  placeholder="Password"
+                  onChange={handleChange}
+                />
+              </Form.Group>
+
+              <Button
+                type="submit"
+                className="mt-2 mb-2"
+                disabled={loading}
+                style={{
+                  background: "#0072bc",
+                  border: "none",
+                  width: "100%",
+                }}
+              >
+                {loading ? (
+                  <>
+                    <Spinner animation="grow" />
+                    <span>Loading...</span>
+                  </>
+                ) : (
+                  "Sign up"
+                )}
+              </Button>
+              <OAuth />
+              <span className="mt-2 m-2">Have an account?</span>
+              <Link to="/signin">Sign in</Link>
+              {errorMessage && (
+                <Alert variant="danger" className="mt-2">
+                  {errorMessage}
+                </Alert>
+              )}
+            </Form>
+          </Col>
+        </Row>
+      </Container>
+
+      {/* <div style={{ background: "#2c353d" }}>
       <Container
         className="text-light"
         style={{ minHeight: "80vh" }}
@@ -140,6 +222,7 @@ export default function SignUp() {
           </Col>
         </Row>
       </Container>
-    </div>
+    </div>*/}
+    </>
   );
 }

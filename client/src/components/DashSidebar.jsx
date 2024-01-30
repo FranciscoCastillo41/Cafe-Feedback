@@ -6,6 +6,8 @@ import { IoIosArrowForward } from "react-icons/io";
 import { useLocation } from "react-router-dom";
 import { Link } from "react-router-dom";
 import Nav from "react-bootstrap/Nav";
+import Navbar from "react-bootstrap/Navbar";
+import Container from "react-bootstrap/esm/Container";
 
 export default function DashSidebar() {
   const location = useLocation();
@@ -22,8 +24,8 @@ export default function DashSidebar() {
 
   const handleSignout = async () => {
     try {
-      const res = await fetch('/api/user/signout', {
-        method: 'POST',
+      const res = await fetch("/api/user/signout", {
+        method: "POST",
       });
       const data = await res.json();
       if (!res.ok) {
@@ -37,7 +39,10 @@ export default function DashSidebar() {
   };
 
   return (
-    <Nav className="flex-column w-full md:w-56 bg-dark text-light">
+    <Nav
+      className="flex-column w-full md:w-56"
+      style={{ background: "#0072bc" }}
+    >
       <Link
         to="/dashboard?tab=profile"
         className="nav-link d-flex align-items-center text-light"
@@ -46,7 +51,10 @@ export default function DashSidebar() {
         <Nav.Item className="ml-2">Profile</Nav.Item>
       </Link>
 
-      <Nav.Item className="nav-link cursor-pointer d-flex align-items-center text-light" onClick={handleSignout}>
+      <Nav.Item
+        className="nav-link cursor-pointer d-flex align-items-center text-light"
+        onClick={handleSignout}
+      >
         <IoIosArrowForward />
         <span className="ml-2">Sign Out</span>
       </Nav.Item>

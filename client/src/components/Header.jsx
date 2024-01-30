@@ -2,10 +2,6 @@ import React from "react";
 import Container from "react-bootstrap/Container";
 import Navbar from "react-bootstrap/Navbar";
 import Nav from "react-bootstrap/Nav";
-import Form from "react-bootstrap/Form";
-import Col from "react-bootstrap/Col";
-import Button from "react-bootstrap/Button";
-import Row from "react-bootstrap/Row";
 import { Link } from "react-router-dom";
 import { useSelector } from "react-redux";
 import Dropdown from "react-bootstrap/Dropdown";
@@ -21,8 +17,8 @@ export default function Header() {
 
   const handleSignout = async () => {
     try {
-      const res = await fetch('/api/user/signout', {
-        method: 'POST',
+      const res = await fetch("/api/user/signout", {
+        method: "POST",
       });
       const data = await res.json();
       if (!res.ok) {
@@ -36,39 +32,46 @@ export default function Header() {
   };
 
   return (
-    <Navbar
-      collapseOnSelect
-      expand="lg"
-      data-bs-theme="dark"
-      bg="dark"
-      style={{
-        padding: "0.8rem",
-        borderBottom: "0.2rem solid #224C98",
-      }}
-    >
+    <Navbar collapseOnSelect expand="lg" bg="light" className="border-bottom shadow sticky-top">
       <Container>
-        <Navbar.Brand
-          style={{
-            color: "white",
-            background:
-              "linear-gradient(0deg, rgba(34,76,152,1) 0%, rgba(45,206,253,1) 100%)",
-            padding: "0.6rem",
-            borderRadius: "1rem",
-          }}
-        >
-          <Link to="/">Dora's Cafe</Link>
+        <Navbar.Brand>
+          <Link to="/" className="text-decoration-none nav-font nav-brand-style" style={{color: "#002460"}}>
+            Dora's Cafe
+          </Link>
         </Navbar.Brand>
         <Navbar.Toggle aria-controls="responsive-navbar-nav" />
         <Navbar.Collapse id="responsive-navbar-nav">
           <Nav className="me-auto">
-            <Nav.Item className="nav-link text-light">
-              <Link to="/about">About</Link>
+            <Nav.Item className="nav-link">
+              <Link className="text-decoration-none text-muted nav-font">About</Link>
             </Nav.Item>
-            <Nav.Item className="nav-link text-light">
-              <Link to="/signup">Specials</Link>
+            <Nav.Item className="nav-link">
+              <Link className="text-decoration-none text-muted nav-font">Specials</Link>
             </Nav.Item>
-            
-
+            <Nav.Item className="nav-link">
+              <Link className="text-decoration-none text-muted nav-font">About</Link>
+            </Nav.Item>
+            <NavDropdown title="More info" id="collapsible-nav-dropdown" className="nav-font">
+              <NavDropdown.Item href="#action/3.1">Dora's Cafe website</NavDropdown.Item>
+              
+              <NavDropdown.Divider />
+              <NavDropdown.Item href="#action/3.4">
+                Texas Wesleyan Website
+              </NavDropdown.Item>
+            </NavDropdown>
+          </Nav>
+          <Nav>
+            {/* 
+              <Form className="d-flex">
+                <Form.Control
+                  type="search"
+                  placeholder="Search"
+                  className="me-2 bg-dark text-light"
+                  aria-label="Search"
+                />
+                <Button>Search</Button>
+              </Form>
+            */}
             {currentUser ? (
               <NavDropdown
                 title={
@@ -77,59 +80,32 @@ export default function Header() {
                     alt="Profile"
                     roundedCircle
                     className="mr-2"
-                    style={{ width: "30px", height: "30px" }}
+                    style={{ width: "35px", height: "35px" }}
                   />
                 }
                 id="collapsible-nav-dropdown"
-                className="no-arrow-dropdown"
+                className="no-arrow-dropdown nav-font"
               >
                 <NavDropdown.Item>
-                  <Link to="/dashboard">Profile</Link>
-                </NavDropdown.Item>
-                <NavDropdown.Item href="#action/3.2">
-                  Another action
-                </NavDropdown.Item>
-                <NavDropdown.Item href="#action/3.3">
-                  Something
+                  <Link
+                    to="/dashboard"
+                    className="text-decoration-none text-dark"
+                  >
+                    Profile
+                  </Link>
                 </NavDropdown.Item>
                 <NavDropdown.Divider />
-                <NavDropdown.Item onClick={handleSignout}>Sign out</NavDropdown.Item>
+                <NavDropdown.Item onClick={handleSignout}>
+                  Sign out
+                </NavDropdown.Item>
               </NavDropdown>
             ) : (
               <>
-                <Link to="/signin" className="nav-link" style={{
-                      background:
-                      "linear-gradient(259deg, rgba(34,76,152,1) 0%, rgba(45,206,253,1) 100%)",
-                    border: "none",
-                    color: "white",
-                    borderRadius: "5px",
-                    }}>
-                  
-                  
-                    Sign in
-                  
+                <Link to="/signin" className="nav-link">
+                  Sign in
                 </Link>
               </>
             )}
-          </Nav>
-          <Nav>
-            <Form className="d-flex">
-              <Form.Control
-                type="search"
-                placeholder="Search"
-                className="me-2 bg-dark text-light"
-                aria-label="Search"
-              />
-              <Button
-                style={{
-                  background:
-                    "linear-gradient(259deg, rgba(34,76,152,1) 0%, rgba(45,206,253,1) 100%)",
-                  border: "none",
-                }}
-              >
-                Search
-              </Button>
-            </Form>
           </Nav>
         </Navbar.Collapse>
       </Container>

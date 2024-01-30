@@ -17,19 +17,19 @@ export default function OAuth() {
     provider.setCustomParameters({ prompt: "select_account" });
     try {
       const resultsFromGoogle = await signInWithPopup(auth, provider);
-      const res = await fetch('/api/auth/google', {
-        method: 'POST',
-        headers: {'Content-Type': 'application/json'},
+      const res = await fetch("/api/auth/google", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
-            name: resultsFromGoogle.user.displayName,
-            email: resultsFromGoogle.user.email,
-            googlePhotoUrl: resultsFromGoogle.user.photoURL,
+          name: resultsFromGoogle.user.displayName,
+          email: resultsFromGoogle.user.email,
+          googlePhotoUrl: resultsFromGoogle.user.photoURL,
         }),
-      })
+      });
       const data = await res.json();
       if (res.ok) {
         dispatch(signInSuccess(data));
-        navigate('/');
+        navigate("/");
       }
     } catch (error) {
       console.log(error);
@@ -43,17 +43,14 @@ export default function OAuth() {
       className="mt-2 mb-2 d-flex align-items-center justify-content-center"
       style={{
         background: "transparent",
-        border: "2px solid",
-        borderImage:
-          "linear-gradient(259deg, rgba(34,76,152,1) 0%, rgba(45,206,253,1) 100%)",
-        borderImageSlice: 1,
+        border: "2px solid #0072bc",
         width: "100%",
         color: "black",
         borderRadius: "10px !important",
       }}
     >
-      <AiFillGoogleCircle size={24} className="mr-2 text-light" />
-      <span style={{ fontSize: "1rem" }} className="text-light">Continue with Google</span>
+      <AiFillGoogleCircle size={24} className="mr-2" />
+      <span style={{ fontSize: "1rem" }}>Continue with Google</span>
     </Button>
   );
 }

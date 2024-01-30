@@ -20,7 +20,7 @@ import {
 
 export default function ComponentFooter() {
   return (
-    <footer className="footer-32892 pb-0 bg-dark text-light">
+    <footer className="footer-32892 pb-0 bg-dark text-light ">
       <div className="site-section">
         <Container className="p-5">
           <Row>

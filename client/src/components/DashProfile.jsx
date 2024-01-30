@@ -162,152 +162,139 @@ export default function DashProfile() {
   };
 
   return (
-    <Container className="mx-auto mb-5 mt-5">
-      {/* 
-      <h1
-        className="text-center mb-4 mt-4 text-light"
-        style={{ fontSize: "2rem", fontWeight: "700" }}
-      >
-        Profile
-      </h1>
-    */}
-    <h1 className="text-center display-4  text-light mb-3">
-      Profile
-    </h1>
-      {imageFileUploadError && (
-        <Alert variant="danger">{imageFileUploadError}</Alert>
-      )}
+    <Container className="min-vh-100 mt-5 mb-5">
+      <h1 className="display-4 text-center nav-font">Profile Settings</h1>
+      <p className="lead text-center">Edit, change or update your profile!</p>
+      <Image
+        src={imageFileUrl || currentUser.profilePicture}
+        roundedCircle
+        className="mx-auto mt-3"
+        onClick={() => filePickerRef.current.click()}
+        style={{
+          width: "200px",
+          height: "200px",
+          border: "5px solid #002460",
+          cursor: "pointer",
+        }}
+      />
 
-      <Card
-        className="mx-auto "
-        data-bs-theme="dark"
-        //bg="dark"
-        style={{ maxWidth: "500px", border: "none", background: "#2c353d" }}
-      >
-        <Image
-          src={imageFileUrl || currentUser.profilePicture}
-          roundedCircle
-          className="mx-auto mt-3"
-          onClick={() => filePickerRef.current.click()}
-          style={{
-            width: "200px",
-            height: "200px",
-            border: "7px solid #224C98",
-          }}
+      <Form onSubmit={handleSubmit} className="w-100 mx-auto mt-5">
+        <input
+          type="file"
+          accept="image/*"
+          onChange={handleImageChange}
+          ref={filePickerRef}
+          hidden
         />
-        <Card.Body>
-          <Form onSubmit={handleSubmit}>
-            <input
-              type="file"
-              accept="image/*"
-              onChange={handleImageChange}
-              ref={filePickerRef}
-              hidden
-            />
-            <Form.Group className="mb-3">
-              <Form.Control
-                type="username"
-                placeholder="Username"
-                id="username"
-                defaultValue={currentUser.username}
-                onChange={handleChange}
-              />
-            </Form.Group>
-            <Form.Group className="mb-3">
-              <Form.Control
-                type="email"
-                placeholder="Email"
-                id="email"
-                defaultValue={currentUser.email}
-                onChange={handleChange}
-              />
-            </Form.Group>
-            <Form.Group className="mb-3">
-              <Form.Control
-                type="password"
-                id="password"
-                placeholder="Password"
-                onChange={handleChange}
-              />
-            </Form.Group>
+        <Form.Group className="mb-3">
+          <Form.Control
+            type="username"
+            placeholder="Username"
+            id="username"
+            defaultValue={currentUser.username}
+            onChange={handleChange}
+          />
+        </Form.Group>
+        <Form.Group className="mb-3">
+          <Form.Control
+            type="email"
+            placeholder="Email"
+            id="email"
+            defaultValue={currentUser.email}
+            onChange={handleChange}
+          />
+        </Form.Group>
+        <Form.Group className="mb-3">
+          <Form.Control
+            type="password"
+            id="password"
+            placeholder="Password"
+            onChange={handleChange}
+          />
+        </Form.Group>
+        <Button
+          type="submit"
+          style={{
+            width: "100%",
+            background: "#0072bc",
+            border: "none",
+          }}
+        >
+          Update
+        </Button>
+        {currentUser.isAdmin && (
+          <Link to={"/create-post"}>
             <Button
-              type="submit"
+              type="button"
+              className="mt-3"
               style={{
+                background: "transparent",
+                border: "2px solid #0072bc",
+                color: "black",
                 width: "100%",
-                background:
-                  "linear-gradient(259deg, rgba(34,76,152,1) 0%, rgba(45,206,253,1) 100%)",
-                border: "none",
+                borderRadius: "2px !important",
               }}
             >
-              Update
+              Create a post
             </Button>
-            {currentUser.isAdmin && (
-              <Link to={"/create-post"}>
-                <Button
-                  type="button"
-                  className="mt-3"
-                  style={{
-                    background: "transparent",
-                    border: "2px solid",
-                    borderImage:
-                      "linear-gradient(259deg, rgba(34,76,152,1) 0%, rgba(45,206,253,1) 100%)",
-                    borderImageSlice: 1,
-                    width: "100%",
-                    color: "white",
-                    borderRadius: "2px !important",
-                  }}
-                >
-                  Create a post
-                </Button>
-              </Link>
-            )}
-          </Form>
-          <div className="flex justify-between mt-2">
-            <span onClick={() => setShowModal(true)}>Delete</span>
-            <span onClick={handleSignout}>Sign out</span>
-          </div>
-          {updateUserSuccess && (
-            <Alert variant="success" className="mt-3">
-              {updateUserSuccess}
-            </Alert>
-          )}
-          {updateUserError && (
-            <Alert variant="warning" className="mt-3">
-              {updateUserError}
-            </Alert>
-          )}
-          {error && (
-            <Alert variant="warning" className="mt-3">
-              {error}
-            </Alert>
-          )}
-          <Modal
-            bg="dark"
-            show={showModal}
-            onClose={() => setShowModal(false)}
-            centered
+          </Link>
+        )}
+        <div className="d-flex justify-between mt-2 text-center ">
+          <span
+            onClick={() => setShowModal(true)}
+            style={{ cursor: "pointer", color: "darkred" }}
           >
-            <Modal.Header closeButton></Modal.Header>
-            <Modal.Body>
-              <div className="text-center">
-                <HiOutlineExclamationCircle
-                  className="text-secondary mx-auto"
-                  style={{ fontSize: "4rem" }}
-                />
-              </div>
-              <h3 className="mb-5 text-center mt-3">
-                Are you sure you want to delete your account?
-              </h3>
-              <div className="flex justify-center gap-4">
-                <Button variant="danger" onClick={handleDeleteUser}>
-                  Yes I'm sure
-                </Button>
-                <Button onClick={() => setShowModal(false)}>No, cancel</Button>
-              </div>
-            </Modal.Body>
-          </Modal>
-        </Card.Body>
-      </Card>
+            Delete
+          </span>
+          <span
+            onClick={handleSignout}
+            style={{ cursor: "pointer" }}
+            className="text-secondary"
+          >
+            Sign out
+          </span>
+        </div>
+      </Form>
+      {updateUserSuccess && (
+        <Alert variant="success" className="mt-3 w-100 mx-auto">
+          {updateUserSuccess}
+        </Alert>
+      )}
+      {updateUserError && (
+        <Alert variant="warning" className="mt-3 w-100 mx-auto">
+          {updateUserError}
+        </Alert>
+      )}
+      {error && (
+        <Alert variant="warning" className="mt-3 w-100 mx-auto">
+          {error}
+        </Alert>
+      )}
+      <Modal
+        
+        show={showModal}
+        onClose={() => setShowModal(false)}
+        centered
+      >
+        <Modal.Header closeButton></Modal.Header>
+        <Modal.Body>
+          <div className="text-center">
+            <HiOutlineExclamationCircle
+              className="text-secondary mx-auto"
+              style={{ fontSize: "4rem" }}
+            />
+          </div>
+          <h3 className="mb-5 text-center mt-3">
+            Are you sure you want to delete your account?
+          </h3>
+          <div className="d-flex justify-center gap-4">
+            <Button variant="danger" onClick={handleDeleteUser}>
+              Yes I'm sure
+            </Button>
+            <Button onClick={() => setShowModal(false)}>No, cancel</Button>
+          </div>
+        </Modal.Body>
+      </Modal>
     </Container>
   );
 }

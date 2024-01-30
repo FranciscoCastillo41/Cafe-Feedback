@@ -1,23 +1,19 @@
 @import url('https://fonts.googleapis.com/css2?family=Alfa+Slab+One&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Poppins&display=swap');
 
-.navbar-brand {
-    font-family: "Alfa Slab One", serif;
-    /*
-    background: #224C98;
-    
-    background: linear-gradient(0deg, rgba(34,76,152,1) 0%, rgba(45,206,253,1) 100%);
-    */
-    padding: 2rem;
-    border-radius: 2rem;
+.nav-brand-style{
+    font-family: 'Poppins', sans-serif;
+    text-transform: uppercase;
+    font-weight: bolder;
+    transition: color 0.3s ease;
 }
 
-.nav-signup-btn {
-    background-color: transparent;
+.nav-brand-style:hover{
+    color: hsl(49, 100%, 39%);
 }
 
-.navbar-style {
-    border-bottom: gray;
-    border-bottom: 1px;
+.nav-font {
+    font-family: 'Poppins', sans-serif;
 }
 
 .no-arrow-dropdown .dropdown-toggle::after {
