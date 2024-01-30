@@ -50,7 +50,24 @@ export default function DashUsers() {
     }
   };
 
-  const handleDeleteUser = async () => {};
+  const handleDeleteUser = async () => {
+    try{
+      const res = await fetch(`/api/user/delete/${userIdToDelete}`, {
+        method: 'DELETE',
+      });
+      const data = await res.json();
+      if (res.ok) {
+        setUsers((prev) => prev.filter((user) => user._id !== userIdToDelete));
+        setShowModal(false);
+      } else {
+        console.log(data.message);
+      }
+
+    }catch(error){
+
+    }
+
+  };
 
   return (
     <div className="mt-5">
@@ -81,7 +98,13 @@ export default function DashUsers() {
                   </td>
                   <td>{user.username}</td>
                   <td>{user.email}</td>
-                  <td>{user.isAdmin ? <FaCheck className="text-green"/> : <FaTimes className="text-red"/>}</td>
+                  <td>
+                    {user.isAdmin ? (
+                      <FaCheck className="text-green" />
+                    ) : (
+                      <FaTimes className="text-red" />
+                    )}
+                  </td>
                   <td>
                     <span
                       onClick={() => {
