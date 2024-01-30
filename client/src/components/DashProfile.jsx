@@ -1,4 +1,5 @@
 import React, { useState, useRef, useEffect } from "react";
+import { Link } from "react-router-dom";
 import { useSelector } from "react-redux";
 import {
   getDownloadURL,
@@ -128,28 +129,26 @@ export default function DashProfile() {
   };
   const handleDeleteUser = async () => {
     setShowModal(false);
-    try{
+    try {
       dispatch(deleteUserStart());
-      const res = await fetch(`/api/user/delete/${currentUser._id}`,
-      {
-        method: 'DELETE',
+      const res = await fetch(`/api/user/delete/${currentUser._id}`, {
+        method: "DELETE",
       });
       const data = await res.json();
-      if(!res.ok) {
+      if (!res.ok) {
         dispatch(deleteUserFailure(error.message));
       } else {
         dispatch(deleteUserSuccess(data));
       }
-
-    } catch(error){
+    } catch (error) {
       dispatch(deleteUserFailure(error.message));
     }
   };
 
   const handleSignout = async () => {
     try {
-      const res = await fetch('/api/user/signout', {
-        method: 'POST',
+      const res = await fetch("/api/user/signout", {
+        method: "POST",
       });
       const data = await res.json();
       if (!res.ok) {
@@ -164,12 +163,17 @@ export default function DashProfile() {
 
   return (
     <Container className="mx-auto mb-5 mt-5">
+      {/* 
       <h1
         className="text-center mb-4 mt-4 text-light"
         style={{ fontSize: "2rem", fontWeight: "700" }}
       >
         Profile
       </h1>
+    */}
+    <h1 className="text-center display-4  text-light mb-3">
+      Profile
+    </h1>
       {imageFileUploadError && (
         <Alert variant="danger">{imageFileUploadError}</Alert>
       )}
@@ -237,6 +241,26 @@ export default function DashProfile() {
             >
               Update
             </Button>
+            {currentUser.isAdmin && (
+              <Link to={"/create-post"}>
+                <Button
+                  type="button"
+                  className="mt-3"
+                  style={{
+                    background: "transparent",
+                    border: "2px solid",
+                    borderImage:
+                      "linear-gradient(259deg, rgba(34,76,152,1) 0%, rgba(45,206,253,1) 100%)",
+                    borderImageSlice: 1,
+                    width: "100%",
+                    color: "white",
+                    borderRadius: "2px !important",
+                  }}
+                >
+                  Create a post
+                </Button>
+              </Link>
+            )}
           </Form>
           <div className="flex justify-between mt-2">
             <span onClick={() => setShowModal(true)}>Delete</span>
@@ -252,12 +276,17 @@ export default function DashProfile() {
               {updateUserError}
             </Alert>
           )}
-           {error && (
+          {error && (
             <Alert variant="warning" className="mt-3">
               {error}
             </Alert>
           )}
-          <Modal bg='dark' show={showModal} onClose={() => setShowModal(false)} centered>
+          <Modal
+            bg="dark"
+            show={showModal}
+            onClose={() => setShowModal(false)}
+            centered
+          >
             <Modal.Header closeButton></Modal.Header>
             <Modal.Body>
               <div className="text-center">
@@ -270,10 +299,11 @@ export default function DashProfile() {
                 Are you sure you want to delete your account?
               </h3>
               <div className="flex justify-center gap-4">
-              <Button variant="danger" onClick={handleDeleteUser}>Yes I'm sure</Button>
-              <Button onClick={() => setShowModal(false)}>No, cancel</Button>
+                <Button variant="danger" onClick={handleDeleteUser}>
+                  Yes I'm sure
+                </Button>
+                <Button onClick={() => setShowModal(false)}>No, cancel</Button>
               </div>
-              
             </Modal.Body>
           </Modal>
         </Card.Body>

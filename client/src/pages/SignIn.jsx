@@ -68,6 +68,7 @@ export default function SignIn() {
               padding: "0.6rem",
               borderRadius: "1rem",
               fontSize: "3rem",
+              textDecoration:"none",
             }}
           >
             Dora's Cafe
