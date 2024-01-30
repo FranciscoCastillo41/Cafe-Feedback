@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import { useLocation } from "react-router-dom";
 import DashSidebar from "../components/DashSidebar";
 import DashProfile from "../components/DashProfile";
+import DashPosts from "../components/DashPosts";
 import Container from "react-bootstrap/esm/Container";
 import "./Dashboard.css";
 import Col from "react-bootstrap/esm/Col";
@@ -26,7 +27,9 @@ export default function Dashboard() {
           <DashSidebar />
         </Col>
 
-        <Col md={8}>{tab === "profile" && <DashProfile />}</Col>
+        <Col md={8}>{tab === "profile" && <DashProfile />}
+        {tab === "posts" && <DashPosts />}
+        </Col>
       </div>
     
   );

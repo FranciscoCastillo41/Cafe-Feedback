@@ -3,8 +3,10 @@ import { useDispatch } from "react-redux";
 import { signoutSuccess } from "../redux/user/userSlice";
 import { AiOutlineUser } from "react-icons/ai";
 import { IoIosArrowForward } from "react-icons/io";
+import { HiDocumentText } from "react-icons/hi";
 import { useLocation } from "react-router-dom";
 import { Link } from "react-router-dom";
+import { useSelector } from "react-redux";
 import Nav from "react-bootstrap/Nav";
 import Navbar from "react-bootstrap/Navbar";
 import Container from "react-bootstrap/esm/Container";
@@ -12,6 +14,7 @@ import Container from "react-bootstrap/esm/Container";
 export default function DashSidebar() {
   const location = useLocation();
   const [tab, setTab] = useState("");
+  const { currentUser } = useSelector((state) => state.user);
   const dispatch = useDispatch();
 
   useEffect(() => {
@@ -50,6 +53,15 @@ export default function DashSidebar() {
         <AiOutlineUser />
         <Nav.Item className="ml-2">Profile</Nav.Item>
       </Link>
+      {currentUser.isAdmin && (
+        <Link
+          to="/dashboard?tab=posts"
+          className="nav-link d-flex align-items-center text-light"
+        >
+          <HiDocumentText />
+          <Nav.Item className="ml-2">Posts</Nav.Item>
+        </Link>
+      )}
 
       <Nav.Item
         className="nav-link cursor-pointer d-flex align-items-center text-light"
