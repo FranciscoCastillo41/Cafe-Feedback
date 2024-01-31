@@ -66,8 +66,7 @@ export default function UpdatePost() {
         "state_changed",
         (snapshot) => {
           const progress =
-            (snapshot.bytesTransferred.bytesTransferred / snapshot.totalBytes) *
-            100;
+            (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
           setImageUploadProgress(progress.toFixed(0));
         },
         (error) => {
@@ -88,6 +87,7 @@ export default function UpdatePost() {
       console.log(error);
     }
   };
+
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
@@ -123,6 +123,7 @@ export default function UpdatePost() {
           <Form.Group as={Col} xs={12} md={6} controlId="postTitle">
             <Form.Label className="text-center">Title</Form.Label>
             <Form.Control
+              type="text"
               placeholder="Title"
               onChange={(e) =>
                 setFormData({ ...formData, title: e.target.value })
@@ -157,6 +158,7 @@ export default function UpdatePost() {
               />
               <Button
                 onClick={handleUploadImage}
+                
                 className="ms-2"
                 style={{ background: "#0072bc" }}
               >
