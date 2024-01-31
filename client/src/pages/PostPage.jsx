@@ -5,6 +5,7 @@ import { Link } from "react-router-dom";
 import Button from "react-bootstrap/esm/Button";
 import Image from "react-bootstrap/esm/Image";
 import CallToAction from "../components/CallToAction";
+import CommentSection from "../components/CommentSection";
 
 export default function PostPage() {
   const { postSlug } = useParams();
@@ -56,16 +57,24 @@ export default function PostPage() {
           {post && post.category}
         </Button>
       </Link>
-      <Image src={post && post.image} alt={post && post.title} className="mt-10 p-3 mx-h-[600px] w-full object-cover"/>
+      <Image
+        src={post && post.image}
+        alt={post && post.title}
+        className="mt-10 p-3 mx-h-[600px] w-full object-cover"
+      />
       <div className="flex justify-between p-3">
-        <span className="text-muted">{post && new Date(post.createdAt).toLocaleDateString()}</span>
+        <span className="text-muted">
+          {post && new Date(post.createdAt).toLocaleDateString()}
+        </span>
       </div>
-      <div className="p-3 max-w-2xl mx-auto w-full" dangerouslySetInnerHTML={{__html: post && post.content}}>
-
-      </div>
+      <div
+        className="p-3 max-w-2xl mx-auto w-full"
+        dangerouslySetInnerHTML={{ __html: post && post.content }}
+      ></div>
       <div className="max-w-4xl mx-auto w-full">
-        <CallToAction/>
+        <CallToAction />
       </div>
+      <CommentSection postId={post._id} />
     </main>
   );
 }

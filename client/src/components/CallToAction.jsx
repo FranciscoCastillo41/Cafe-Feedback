@@ -7,7 +7,7 @@ export default function CallToAction() {
     <div style ={{border: "2px solid #5c8ab9", borderRadius: "5px"}}className="flex flex-col sm:flex-row p-3 justify-center items-center"
 
     >
-      <div className="flex-1 justify-center flex flex-col">
+      <div className="flex-1 justify-center flex flex-col text-center">
         <h2 className="text-2xl">Want to learn more about Texas Wesleyan?</h2>
         <p className="text-muted">Check out the offical website of Texas Wesleyan!</p>
         <Button style={{background: "#0072bc"}}>Learn more</Button>
