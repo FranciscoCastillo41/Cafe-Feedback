@@ -1,15 +1,18 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 import Image from "react-bootstrap/esm/Image";
 import { Link } from "react-router-dom";
 import Form from "react-bootstrap/Form";
 import Button from "react-bootstrap/Button";
 import Alert from "react-bootstrap/Alert";
+import Comment from "./Comment";
 
 export default function CommentSection({ postId }) {
   const { currentUser } = useSelector((state) => state.user);
   const [comment, setComment] = useState("");
   const [commentError, setCommentError] = useState(null);
+  const [comments, setComments] = useState([]);
+  console.log(comments);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -33,11 +36,27 @@ export default function CommentSection({ postId }) {
       if (res.ok) {
         setComment("");
         setCommentError(null);
+        setComments([data,...comments]);
       }
     } catch (error) {
-      setCommentError(error.message)
+      setCommentError(error.message);
     }
   };
+
+  useEffect(() => {
+    const getComments = async () => {
+      try {
+        const res = await fetch(`/api/comment/getPostComments/${postId}`);
+        if (res.ok) {
+          const data = await res.json();
+          setComments(data);
+        }
+      } catch (error) {
+        console.log(error.message);
+      }
+    };
+    getComments();
+  }, [postId]);
 
   return (
     <div className="max-w-2xl mx-auto w-full p-3">
@@ -80,11 +99,32 @@ export default function CommentSection({ postId }) {
             </div>
           </Form.Group>
           {commentError && (
-            <Alert variant="danger" className="mt-3">{commentError}</Alert>
+            <Alert variant="danger" className="mt-3">
+              {commentError}
+            </Alert>
           )}
-          
         </Form>
-        
+      )}
+      {comments.length === 0 ? (
+        <p className="text-sm my-5">No comments yet</p>
+      ) : (
+        <>
+          <div className="text-sm my-5 flex items-center gap-1">
+            <p>Comments: </p>
+            <div>
+              <p>{comments.length}</p>
+            </div>
+          </div>
+          {
+            comments.map(comment => (
+              <Comment 
+              key={comment._id}
+              comment={comment}
+              />
+              
+            ))
+          }
+        </>
       )}
     </div>
   );
