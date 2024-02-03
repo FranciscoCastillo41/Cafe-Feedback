@@ -1,10 +1,14 @@
 import React, { useEffect, useState } from "react";
+import { useSelector } from "react-redux";
 import Image from "react-bootstrap/Image";
+import Button from "react-bootstrap/esm/Button";
 import moment from "moment";
+import { FaThumbsUp } from "react-icons/fa";
 
-export default function Comment({ comment }) {
+export default function Comment({ comment, onLike }) {
   const [user, setUser] = useState({});
-  console.log(user);
+  const { currentUser } = useSelector((state) => state.user);
+
   useEffect(() => {
     const getUser = async () => {
       try {
@@ -34,7 +38,32 @@ export default function Comment({ comment }) {
           {moment(comment.createdAt).fromNow()}
         </span>
       </div>
-      <p className="pb-2 mb-0">{comment.content}</p>
+      <p className="pb-2 mb-0 flex-grow-1">{comment.content}</p>
+      <div className="ml-auto">
+        <Button
+          type="button"
+          onClick={() => onLike(comment._id)}
+          className={`btn btn-outline-secondary btn-sm ${
+            currentUser &&
+            comment.likes.includes(currentUser._id) &&
+            "btn-primary"
+          }`}
+        >
+          <FaThumbsUp
+            className={`mr-1 ${
+              currentUser &&
+              comment.likes.includes(currentUser._id) &&
+              "text-white"
+            }`}
+          />
+        </Button>
+        <p className="text-muted text-sm">
+          {comment.numberOfLikes > 0 &&
+            comment.numberOfLikes +
+              " " +
+              (comment.numberOfLikes === 1 ? "like" : "likes")}
+        </p>
+      </div>
     </div>
   );
 }
