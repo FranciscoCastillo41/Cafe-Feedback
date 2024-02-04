@@ -6,12 +6,18 @@ import Button from "react-bootstrap/esm/Button";
 import Image from "react-bootstrap/esm/Image";
 import CallToAction from "../components/CallToAction";
 import CommentSection from "../components/CommentSection";
+import Card from "react-bootstrap/Card";
+import Container from "react-bootstrap/Container";
+import Row from "react-bootstrap/Row";
+import Col from "react-bootstrap/Col";
+import PostCard from "../components/PostCard";
 
 export default function PostPage() {
   const { postSlug } = useParams();
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(false);
   const [post, setPost] = useState(null);
+  const [ recentPosts, setRecentPosts] = useState(null);
 
   useEffect(() => {
     const fetchPost = async () => {
@@ -36,6 +42,21 @@ export default function PostPage() {
     };
     fetchPost();
   }, [postSlug]);
+
+  useEffect(() => {
+    try {
+      const fetchRecentPosts = async () => {
+        const res = await fetch(`/api/post/getposts?limit=3`);
+        const data = await res.json();
+        if(res.ok) {
+          setRecentPosts(data.posts);
+        }
+      }
+      fetchRecentPosts();
+    } catch(error) {
+      console.log(error);
+    }
+  },[])
 
   if (loading)
     return (
@@ -75,6 +96,21 @@ export default function PostPage() {
         <CallToAction />
       </div>
       <CommentSection postId={post._id} />
+      <Container>
+      <Row>
+        <Col>
+          <h1 className="text-center">Recent posts</h1>
+        </Col>
+      </Row>
+      <Row xs={1} sm={2} md={3}>
+        {recentPosts &&
+          recentPosts.map((post) => (
+            <Col key={post._id} className="mb-4">
+              <PostCard post={post} />
+            </Col>
+          ))}
+      </Row>
+    </Container>
     </main>
   );
 }

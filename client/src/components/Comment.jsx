@@ -9,7 +9,7 @@ import Form from "react-bootstrap/Form";
 export default function Comment({ comment, onLike, onEdit, onDelete }) {
   const [user, setUser] = useState({});
   const { currentUser } = useSelector((state) => state.user);
-  const [editedContent, setEditedConent] = useState(comment.content);
+  const [editedContent, setEditedContent] = useState(comment.content);
   const [isEditing, setIsEditing] = useState(false);
 
   useEffect(() => {
@@ -29,7 +29,7 @@ export default function Comment({ comment, onLike, onEdit, onDelete }) {
 
   const handleEdit = () => {
     setIsEditing(true);
-    setEditedConent(comment.content);
+    setEditedContent(comment.content);
   };
 
   const handleSave = async () => {
@@ -61,7 +61,7 @@ export default function Comment({ comment, onLike, onEdit, onDelete }) {
         />
         <div className="flex-grow-1">
           <span className="font-weight-bold text-truncate mb-1">
-            {user ? `@${user.username}` : 'anonymous user'}
+            {user ? `@${user.username}` : "anonymous user"}
           </span>
           <span className="text-secondary text-xs">
             {moment(comment.createdAt).fromNow()}
@@ -82,7 +82,13 @@ export default function Comment({ comment, onLike, onEdit, onDelete }) {
             </Form.Group>
           </Form>
           <div className="d-flex">
-            <Button type="button" size="sm" onClick={handleSave} className="mr-2">
+            <Button
+              type="button"
+              size="sm"
+              onClick={handleSave}
+              className="mr-2"
+              style={ {background: "#0072bc", border: "none"}}
+            >
               Save
             </Button>
             <Button type="button" size="sm" onClick={() => setIsEditing(false)}>
@@ -91,43 +97,56 @@ export default function Comment({ comment, onLike, onEdit, onDelete }) {
           </div>
         </div>
       ) : (
-        <>
-          <p className="mt-2">{comment.content}</p>
+        <div className="mt-2">
+          <p>{comment.content}</p>
           <div className="d-flex justify-content-between align-items-center mt-2">
             <div>
               <Button
                 type="button"
                 onClick={() => onLike(comment._id)}
                 className={`btn btn-outline-secondary btn-sm ${
-                  currentUser && comment.likes.includes(currentUser._id) && 'btn-primary'
+                  currentUser &&
+                  comment.likes.includes(currentUser._id) &&
+                  "btn-primary"
                 }`}
               >
                 <FaThumbsUp
                   className={`mr-1 ${
-                    currentUser && comment.likes.includes(currentUser._id) && 'text-white'
+                    currentUser &&
+                    comment.likes.includes(currentUser._id) &&
+                    "text-white"
                   }`}
                 />
               </Button>
               <span className="text-muted text-sm ml-1">
                 {comment.numberOfLikes > 0 &&
-                  `${comment.numberOfLikes} ${comment.numberOfLikes === 1 ? 'like' : 'likes'}`}
+                  `${comment.numberOfLikes} ${
+                    comment.numberOfLikes === 1 ? "like" : "likes"
+                  }`}
               </span>
             </div>
             {currentUser &&
               (currentUser._id === comment.userId || currentUser.isAdmin) && (
-                <>
-                <Button onClick={handleEdit} size="sm">
-                  Edit
-                </Button>
-                <Button onClick={() => onDelete(comment._id)} size="sm">
-                  Delete
-                </Button>
-                
-                </>
-                
+                <div className="d-flex">
+                  <Button
+                    onClick={handleEdit}
+                    size="sm"
+                    className="mr-2"
+                    style={{ background: "#0072bc", border: "none" }}
+                  >
+                    Edit
+                  </Button>
+                  <Button
+                    onClick={() => onDelete(comment._id)}
+                    style={{ background: "#0072bc", border: "none" }}
+                    size="sm"
+                  >
+                    Delete
+                  </Button>
+                </div>
               )}
           </div>
-        </>
+        </div>
       )}
     </div>
   );

@@ -155,7 +155,7 @@ export default function CommentSection({ postId }) {
               <p className="text-muted text-xs">
                 {200 - comment.length} Charachters remaining
               </p>
-              <Button type="submit">Submit</Button>
+              <Button type="submit" style={ {background: "#0072bc", border: "none"}}>Submit</Button>
             </div>
           </Form.Group>
           {commentError && (
