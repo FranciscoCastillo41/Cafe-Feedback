@@ -4,10 +4,13 @@ import Image from "react-bootstrap/Image";
 import Button from "react-bootstrap/esm/Button";
 import moment from "moment";
 import { FaThumbsUp } from "react-icons/fa";
+import Form from "react-bootstrap/Form";
 
-export default function Comment({ comment, onLike }) {
+export default function Comment({ comment, onLike, onEdit }) {
   const [user, setUser] = useState({});
   const { currentUser } = useSelector((state) => state.user);
+  const [editedContent, setEditedConent] = useState(comment.content);
+  const [isEditing, setIsEditing] = useState(false);
 
   useEffect(() => {
     const getUser = async () => {
@@ -23,47 +26,102 @@ export default function Comment({ comment, onLike }) {
     };
     getUser();
   }, [comment]);
+
+  const handleEdit = () => {
+    setIsEditing(true);
+    setEditedConent(comment.content);
+  };
+
+  const handleSave = async () => {
+    try {
+      const res = await fetch(`/api/comment/editComment/${comment._id}`, {
+        method: "PUT",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          content: editedContent,
+        }),
+      });
+      if (res.ok) {
+        setIsEditing(false);
+        onEdit(comment, editedContent);
+      }
+    } catch (error) {
+      console.log(error.message);
+    }
+  };
   return (
-    <div className="d-flex p-4 align-items-center border-bottom">
-      <Image
-        className="w-10 h-10 rounded-circle mr-2"
-        src={user.profilePicture}
-        alt={user.username}
-      />
-      <div className="d-flex flex-column flex-grow-1">
-        <span className="font-weight-bold text-truncate mb-1">
-          {user ? `@${user.username}` : "anonymous user"}
-        </span>
-        <span className="text-secondary text-xs">
-          {moment(comment.createdAt).fromNow()}
-        </span>
+    <div className="d-flex flex-column p-4 border-bottom">
+      <div className="d-flex align-items-center">
+        <Image
+          className="w-10 h-10 rounded-circle mr-2"
+          src={user.profilePicture}
+          alt={user.username}
+        />
+        <div className="flex-grow-1">
+          <span className="font-weight-bold text-truncate mb-1">
+            {user ? `@${user.username}` : 'anonymous user'}
+          </span>
+          <span className="text-secondary text-xs">
+            {moment(comment.createdAt).fromNow()}
+          </span>
+        </div>
       </div>
-      <p className="pb-2 mb-0 flex-grow-1">{comment.content}</p>
-      <div className="ml-auto">
-        <Button
-          type="button"
-          onClick={() => onLike(comment._id)}
-          className={`btn btn-outline-secondary btn-sm ${
-            currentUser &&
-            comment.likes.includes(currentUser._id) &&
-            "btn-primary"
-          }`}
-        >
-          <FaThumbsUp
-            className={`mr-1 ${
-              currentUser &&
-              comment.likes.includes(currentUser._id) &&
-              "text-white"
-            }`}
-          />
-        </Button>
-        <p className="text-muted text-sm">
-          {comment.numberOfLikes > 0 &&
-            comment.numberOfLikes +
-              " " +
-              (comment.numberOfLikes === 1 ? "like" : "likes")}
-        </p>
-      </div>
+
+      {isEditing ? (
+        <div className="mt-2">
+          <Form>
+            <Form.Group controlId="exampleForm.ControlTextarea1">
+              <Form.Control
+                as="textarea"
+                rows={3}
+                value={editedContent}
+                onChange={(e) => setEditedContent(e.target.value)}
+              />
+            </Form.Group>
+          </Form>
+          <div className="d-flex">
+            <Button type="button" size="sm" onClick={handleSave} className="mr-2">
+              Save
+            </Button>
+            <Button type="button" size="sm" onClick={() => setIsEditing(false)}>
+              Cancel
+            </Button>
+          </div>
+        </div>
+      ) : (
+        <>
+          <p className="mt-2">{comment.content}</p>
+          <div className="d-flex justify-content-between align-items-center mt-2">
+            <div>
+              <Button
+                type="button"
+                onClick={() => onLike(comment._id)}
+                className={`btn btn-outline-secondary btn-sm ${
+                  currentUser && comment.likes.includes(currentUser._id) && 'btn-primary'
+                }`}
+              >
+                <FaThumbsUp
+                  className={`mr-1 ${
+                    currentUser && comment.likes.includes(currentUser._id) && 'text-white'
+                  }`}
+                />
+              </Button>
+              <span className="text-muted text-sm ml-1">
+                {comment.numberOfLikes > 0 &&
+                  `${comment.numberOfLikes} ${comment.numberOfLikes === 1 ? 'like' : 'likes'}`}
+              </span>
+            </div>
+            {currentUser &&
+              (currentUser._id === comment.userId || currentUser.isAdmin) && (
+                <Button onClick={handleEdit} size="sm">
+                  Edit
+                </Button>
+              )}
+          </div>
+        </>
+      )}
     </div>
   );
 }
