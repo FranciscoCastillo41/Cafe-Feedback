@@ -6,14 +6,17 @@ import Form from "react-bootstrap/Form";
 import Button from "react-bootstrap/Button";
 import Alert from "react-bootstrap/Alert";
 import Comment from "./Comment";
+import Modal from "react-bootstrap/Modal";
+import { HiOutlineExclamationCircle } from "react-icons/hi";
 
 export default function CommentSection({ postId }) {
   const { currentUser } = useSelector((state) => state.user);
   const [comment, setComment] = useState("");
   const [commentError, setCommentError] = useState(null);
   const [comments, setComments] = useState([]);
+  const [showModal, setShowModal] = useState(false);
+  const [commentToDelete, setCommentToDelete] = useState(null);
   const navigate = useNavigate();
-  console.log(comments);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -62,11 +65,11 @@ export default function CommentSection({ postId }) {
   const handleLike = async (commentId) => {
     try {
       if (!currentUser) {
-        navigate('/sign-in');
+        navigate("/sign-in");
         return;
       }
       const res = await fetch(`/api/comment/likeComment/${commentId}`, {
-        method: 'PUT',
+        method: "PUT",
       });
       if (res.ok) {
         const data = await res.json();
@@ -93,6 +96,26 @@ export default function CommentSection({ postId }) {
         c._id === comment._id ? { ...c, content: editedContent } : c
       )
     );
+  };
+
+  const handleDelete = async (commentId) => {
+    setShowModal(false);
+    try {
+
+      if (!currentUser) {
+        navigate("/signin");
+        return;
+      }
+      const res = await fetch(`/api/comment/deleteComment/${commentId}`, {
+        method: "DELETE",
+      });
+      if (res.ok) {
+        const data = await res.json();
+        setComments(comments.filter((comment) => comment._id !== commentId));
+      }
+    } catch (error) {
+      console.log(error);
+    }
   };
 
   return (
@@ -153,10 +176,42 @@ export default function CommentSection({ postId }) {
             </div>
           </div>
           {comments.map((comment) => (
-            <Comment key={comment._id} comment={comment} onLike={handleLike} onEdit={handleEdit}/>
+            <Comment
+              key={comment._id}
+              comment={comment}
+              onLike={handleLike}
+              onEdit={handleEdit}
+              onDelete={(commentId) => {
+                setShowModal(true);
+                setCommentToDelete(commentId);
+              }}
+            />
           ))}
         </>
       )}
+      <Modal show={showModal} onClose={() => setShowModal(false)} centered>
+        <Modal.Header closeButton></Modal.Header>
+        <Modal.Body>
+          <div className="text-center">
+            <HiOutlineExclamationCircle
+              className="text-secondary mx-auto"
+              style={{ fontSize: "4rem" }}
+            />
+          </div>
+          <h3 className="mb-5 text-center mt-3">
+            Are you sure you want to delete your account?
+          </h3>
+          <div className="d-flex justify-center gap-4">
+            <Button
+              variant="danger"
+              onClick={() => handleDelete(commentToDelete)}
+            >
+              Yes I'm sure
+            </Button>
+            <Button onClick={() => setShowModal(false)}>No, cancel</Button>
+          </div>
+        </Modal.Body>
+      </Modal>
     </div>
   );
 }

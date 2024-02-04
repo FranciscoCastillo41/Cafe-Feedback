@@ -6,7 +6,7 @@ import moment from "moment";
 import { FaThumbsUp } from "react-icons/fa";
 import Form from "react-bootstrap/Form";
 
-export default function Comment({ comment, onLike, onEdit }) {
+export default function Comment({ comment, onLike, onEdit, onDelete }) {
   const [user, setUser] = useState({});
   const { currentUser } = useSelector((state) => state.user);
   const [editedContent, setEditedConent] = useState(comment.content);
@@ -115,9 +115,16 @@ export default function Comment({ comment, onLike, onEdit }) {
             </div>
             {currentUser &&
               (currentUser._id === comment.userId || currentUser.isAdmin) && (
+                <>
                 <Button onClick={handleEdit} size="sm">
                   Edit
                 </Button>
+                <Button onClick={() => onDelete(comment._id)} size="sm">
+                  Delete
+                </Button>
+                
+                </>
+                
               )}
           </div>
         </>
