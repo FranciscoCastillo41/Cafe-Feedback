@@ -3,7 +3,7 @@ import { useDispatch } from "react-redux";
 import { signoutSuccess } from "../redux/user/userSlice";
 import { AiOutlineUser } from "react-icons/ai";
 import { IoIosArrowForward } from "react-icons/io";
-import { HiDocumentText, HiOutlineUserGroup } from "react-icons/hi";
+import { HiAnnotation, HiDocumentText, HiOutlineUserGroup } from "react-icons/hi";
 import { useLocation } from "react-router-dom";
 import { Link } from "react-router-dom";
 import { useSelector } from "react-redux";
@@ -63,6 +63,7 @@ export default function DashSidebar() {
         </Link>
       )}
       {currentUser.isAdmin && (
+        <>
         <Link
           to="/dashboard?tab=users"
           className="nav-link d-flex align-items-center text-light"
@@ -70,6 +71,15 @@ export default function DashSidebar() {
           <HiOutlineUserGroup />
           <Nav.Item className="ml-2">Users</Nav.Item>
         </Link>
+        <Link
+          to="/dashboard?tab=comments"
+          className="nav-link d-flex align-items-center text-light"
+        >
+          <HiAnnotation />
+          <Nav.Item className="ml-2">Comments</Nav.Item>
+        </Link>
+        </>
+        
       )}
 
       <Nav.Item
