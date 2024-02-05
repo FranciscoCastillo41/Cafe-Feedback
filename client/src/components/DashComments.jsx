@@ -76,7 +76,7 @@ export default function DashComments() {
   };
 
   return (
-    <div className="mt-5">
+    <div className="shadow-md rounded-md mt-5 mb-4 p-3">
       {currentUser.isAdmin && comments.length > 0 ? (
         <>
           <Table responsive>

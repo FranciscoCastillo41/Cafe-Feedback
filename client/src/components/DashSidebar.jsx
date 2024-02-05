@@ -3,7 +3,12 @@ import { useDispatch } from "react-redux";
 import { signoutSuccess } from "../redux/user/userSlice";
 import { AiOutlineUser } from "react-icons/ai";
 import { IoIosArrowForward } from "react-icons/io";
-import { HiAnnotation, HiDocumentText, HiOutlineUserGroup } from "react-icons/hi";
+import {
+  HiAnnotation,
+  HiChartPie,
+  HiDocumentText,
+  HiOutlineUserGroup,
+} from "react-icons/hi";
 import { useLocation } from "react-router-dom";
 import { Link } from "react-router-dom";
 import { useSelector } from "react-redux";
@@ -46,6 +51,16 @@ export default function DashSidebar() {
       className="flex-column w-full md:w-56"
       style={{ background: "#0072bc" }}
     >
+      {currentUser && currentUser.isAdmin && (
+        <Link
+          to="/dashboard?tab=dash"
+          className="nav-link d-flex align-items-center text-light"
+        >
+          <HiChartPie />
+          <Nav.Item className="ml-2">Dashboard</Nav.Item>
+        </Link>
+      )}
+
       <Link
         to="/dashboard?tab=profile"
         className="nav-link d-flex align-items-center text-light"
@@ -64,22 +79,21 @@ export default function DashSidebar() {
       )}
       {currentUser.isAdmin && (
         <>
-        <Link
-          to="/dashboard?tab=users"
-          className="nav-link d-flex align-items-center text-light"
-        >
-          <HiOutlineUserGroup />
-          <Nav.Item className="ml-2">Users</Nav.Item>
-        </Link>
-        <Link
-          to="/dashboard?tab=comments"
-          className="nav-link d-flex align-items-center text-light"
-        >
-          <HiAnnotation />
-          <Nav.Item className="ml-2">Comments</Nav.Item>
-        </Link>
+          <Link
+            to="/dashboard?tab=users"
+            className="nav-link d-flex align-items-center text-light"
+          >
+            <HiOutlineUserGroup />
+            <Nav.Item className="ml-2">Users</Nav.Item>
+          </Link>
+          <Link
+            to="/dashboard?tab=comments"
+            className="nav-link d-flex align-items-center text-light"
+          >
+            <HiAnnotation />
+            <Nav.Item className="ml-2">Comments</Nav.Item>
+          </Link>
         </>
-        
       )}
 
       <Nav.Item

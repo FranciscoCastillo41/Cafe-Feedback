@@ -70,7 +70,7 @@ export default function DashUsers() {
   };
 
   return (
-    <div className="mt-5">
+    <div className="shadow-md rounded-md mb-3 mt-5 p-3">
       {currentUser.isAdmin && users.length > 0 ? (
         <>
           <Table responsive>

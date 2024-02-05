@@ -70,7 +70,7 @@ export default function DashPosts() {
     }
   }
   return (
-    <div className="mt-5">
+    <div className="shadow-md rounded-md mt-5 mb-3 p-3">
       {currentUser.isAdmin && userPosts.length > 0 ? (
         <>
           <Table responsive>
