@@ -5,7 +5,7 @@ import Card from "react-bootstrap/Card";
 
 export default function PostCard({ post }) {
   return (
-    <Card className="mb-4">
+    <Card className="mb-4 shadow-md rounded-md" style={{border: "none"}}>
       <Link to={`/post/${post.slug}`}>
         <Card.Img src={post.image} alt="post cover" className="img-fluid" />
       </Link>

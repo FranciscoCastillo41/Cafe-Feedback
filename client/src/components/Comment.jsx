@@ -87,7 +87,7 @@ export default function Comment({ comment, onLike, onEdit, onDelete }) {
               size="sm"
               onClick={handleSave}
               className="mr-2"
-              style={ {background: "#0072bc", border: "none"}}
+              style={{ background: "#0072bc", border: "none" }}
             >
               Save
             </Button>
