@@ -32,10 +32,14 @@ export default function ComponentFooter() {
                 About Us
               </h1>
               <p className="mb-4 text-secondary">
-                Lorem ipsum dolor sit amet, consectetur adipisicing elit.
-                Laboriosam itaque unde facere repellendus, odio et iste
-                voluptatum aspernatur ratione mollitia tempora eligendi maxime
-                est, blanditiis accusamus. Incidunt, aut, quis!
+                Welcome to the Dora's Cafe Feedback App – your platform for
+                sharing thoughts and experiences about our dining haven at Texas
+                Wesleyan University. Created for both students and Dora's Cafe
+                team members, this app provides a seamless space for you to
+                express your opinions, suggestions, and feedback. Your input is
+                invaluable in helping us enhance the dining experience for
+                everyone. Join us in shaping the future of Dora's Cafe by
+                sharing your thoughts today!
               </p>
               <ul className="list-unstyled quick-info mb-4">
                 <li>
@@ -44,8 +48,7 @@ export default function ComponentFooter() {
                     className="d-flex align-items-center text-decoration-none"
                     style={{ color: "#5c8ab9" }}
                   >
-                    <BsPhoneFill className="mr-3 text-secondary" /> +1 291 3912
-                    329
+                    <BsPhoneFill className="mr-3 text-secondary" /> +1 (817) 531-4444
                   </a>
                 </li>
                 <li>
@@ -55,7 +58,7 @@ export default function ComponentFooter() {
                     style={{ color: "#5c8ab9" }}
                   >
                     <BsEnvelopeFill className="mr-3 text-secondary" />{" "}
-                    info@gmail.com
+                    admissions@txwes.edu
                   </a>
                 </li>
               </ul>
@@ -73,8 +76,10 @@ export default function ComponentFooter() {
                     <BsInstagram />
                   </div>
                   <div>
-                    Lorem ipsum dolor sit amet, consectetur adipisicing elit.
-                    Facere unde omnis veniam porro excepturi.
+                    Follow us on Instagram for a visual feast of campus life at
+                    Texas Wesleyan and delightful snapshots from Dora's Cafe.
+                    Stay connected and discover the vibrant community that makes
+                    our university and cafe special.
                   </div>
                 </li>
                 <li className="d-flex">
@@ -82,8 +87,10 @@ export default function ComponentFooter() {
                     <BsFacebook />
                   </div>
                   <div>
-                    Lorem ipsum dolor sit amet, consectetur adipisicing elit.
-                    Facere unde omnis veniam porro excepturi.
+                    Join our Facebook community to stay updated on the latest
+                    news, events, and engaging content from Texas Wesleyan and
+                    Dora's Cafe. Connect with fellow students and cafe
+                    enthusiasts for a virtual social experience.
                   </div>
                 </li>
                 <li className="d-flex">
@@ -91,10 +98,13 @@ export default function ComponentFooter() {
                     <BsTwitterX />
                   </div>
                   <div>
-                    Lorem ipsum dolor sit amet, consectetur adipisicing elit.
-                    Facere unde omnis veniam porro excepturi.
+                    Follow us on Twitter for quick updates, announcements, and
+                    insights into the dynamic happenings at Texas Wesleyan and
+                    the latest offerings at Dora's Cafe. Engage in real-time
+                    conversations and be part of the buzz.
                   </div>
                 </li>
+
                 {/* Add more tweets as needed */}
               </ul>
             </Col>
@@ -105,6 +115,7 @@ export default function ComponentFooter() {
               >
                 University Location
               </h1>
+                <p className="text-gray-500">1201 Wesleyan St, Fort Worth, TX 76105</p>
             </Col>
           </Row>
           <Row>
@@ -117,29 +128,20 @@ export default function ComponentFooter() {
                     </Link>
                   </li>
                   <li className="mr-3 ">
-                    <a href="#" className="text-decoration-none text-light">
+                    <Link
+                      to="/about"
+                      className="text-decoration-none text-light"
+                    >
                       About
-                    </a>
+                    </Link>
                   </li>
                   <li className="mr-3">
-                    <a href="#" className="text-decoration-none text-light">
-                      Our works
-                    </a>
-                  </li>
-                  <li className="mr-3">
-                    <a href="#" className="text-decoration-none text-light">
-                      Services
-                    </a>
-                  </li>
-                  <li className="mr-3">
-                    <a href="#" className="text-decoration-none text-light">
-                      Blog
-                    </a>
-                  </li>
-                  <li>
-                    <a href="#" className="text-decoration-none text-light">
-                      Contacts
-                    </a>
+                    <Link
+                      to="/university"
+                      className="text-decoration-none text-light"
+                    >
+                      University
+                    </Link>
                   </li>
                 </ul>
                 <div className="site-logo-wrap ml-auto">
