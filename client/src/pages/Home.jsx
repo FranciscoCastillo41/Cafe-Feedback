@@ -25,9 +25,9 @@ export default function Home() {
         </h1>
 
         <p>
-          Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam eget
-          justo ut massa tincidunt dapibus. Aenean euismod nisl ut libero
-          cursus, vitae cursus velit bibendum.
+          Welcome to the Dora's Cafe Feedback Web App, an interactive platform
+          designed exclusively for Texas Wesleyan University students and cafe
+          workers to share their thoughts and experiences about Dora's Cafe.
         </p>
         <Link to="/search">View Posts</Link>
       </div>
